@@ -8,14 +8,14 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class BodyProcessing
     {
-        public int BodyProcesser(int content_length, StreamReader reader)
+        public string BodyProcesser(int content_length, StreamReader reader)
         {
-            string command = BodyReader(content_length, reader);
+            var command = BodyReader(content_length, reader);
             if (command != 0.ToString())
             {
                 return CommandListener(command);
             }
-            return 0;
+            return 0.ToString();
         }
 
         public string BodyReader(int content_length, StreamReader reader)
@@ -42,15 +42,15 @@ namespace MonsterTradingCardsGame_3.Server
             return 0.ToString();
         }
 
-        public int CommandListener(string command)
+        public string CommandListener(string command)
         {
             if (command == "quit")
             {
-                return -1;
+                return (-1).ToString();
             }
             else
             {
-                return 0;
+                return command;
             }
         }
     }

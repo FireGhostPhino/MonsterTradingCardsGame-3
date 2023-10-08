@@ -21,6 +21,7 @@ namespace MonsterTradingCardsGame_3.Cards
             while (user.Coins >= StandardValues.packageCost)
             {
                 Console.WriteLine("\n" + user.Username + ": ");
+                Console.WriteLine($"Noch {user.Coins} Münzen über");
                 Console.WriteLine("Soll ein Package generiert werden? (y/N):");
                 string? input = Console.ReadLine();
                 if (input != "y" && input != "Y")

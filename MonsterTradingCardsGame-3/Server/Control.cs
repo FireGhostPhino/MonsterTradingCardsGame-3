@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MonsterTradingCardsGame_3.Server
 {
@@ -13,6 +14,9 @@ namespace MonsterTradingCardsGame_3.Server
         public void ServerControl()
         {
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
+
+            string? requestType;
+            string? path;
 
             var httpServer = new TcpListener(IPAddress.Loopback, 10001);
             httpServer.Start();
@@ -25,11 +29,22 @@ namespace MonsterTradingCardsGame_3.Server
 
                 //read the request
                 string? line;
+                string requestInformation;
                 bool isBody = false;
                 int content_length = 0;
+                int lineNumber = 0;
+                requestInformation = string.Empty;
+
                 while ((line = reader.ReadLine()) != null)
                 {
+                    //Console.WriteLine(lineNumber + ": ");
                     Console.WriteLine(line);
+
+                    if(lineNumber == 0)
+                    {
+                        requestInformation = line;
+                    }
+
                     if (line == "")
                     {
                         isBody = true;
@@ -45,15 +60,37 @@ namespace MonsterTradingCardsGame_3.Server
                             content_length = int.Parse(parts[1].Trim());
                         }
                     }
+                    lineNumber++;
                 }
 
                 BodyProcessing body = new BodyProcessing();
-                int command = body.BodyProcesser(content_length, reader);
+                string bodyInformation = body.BodyProcesser(content_length, reader);
+                //Console.WriteLine("body:\n" + bodyInformation + "\n");
+
+                /*Console.WriteLine(":" + requestInformation);
+                Console.WriteLine(":" + requestInformation.Split('/'));*/
+
+                /*Console.WriteLine(requestInformation);
+                Console.WriteLine(requestInformation[0]);
+                Console.WriteLine(requestInformation.ToString());
+                string test = requestInformation.ToString();
+                string test1 = test.Split(" ");
+                Console.WriteLine("test1: " + test1);
+                Console.WriteLine(": " + requestInformation.Split(' '));
+
+                string test2;
+                foreach (var item in requestInformation)
+                {
+                    test2 += item;
+                }*/
+
+                RequestReacter reactor = new RequestReacter();
+                reactor.ProcessRequest(requestInformation, bodyInformation);
 
                 HTTP_Response response = new HTTP_Response();
                 response.HTTPResponse(writer);
 
-                if (command == -1)
+                if (bodyInformation == "-1")
                 {
                     break;
                 }

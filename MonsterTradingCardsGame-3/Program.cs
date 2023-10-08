@@ -8,7 +8,7 @@ namespace MonsterTradingCardsGame_3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("V3: Branch: Development");
+            Console.WriteLine("V2");
 
             Users.AllUsers userList = new Users.AllUsers();
             Users.User user1 = new Users.User("Herbert", "abcde123", userList);
@@ -24,6 +24,13 @@ namespace MonsterTradingCardsGame_3
             generator.GeneratePackageLoop(user1);
             user1.PrintCardStack();
 
+            Server.Control server = new Server.Control();
+            server.ServerControl();
+            Console.WriteLine("fertig");
+
+            /*Console.WriteLine("V3: Branch: Development");
+
+
 
             /*CardGenerator gen = new CardGenerator();
             for(int i = 0; i < 10; i++)
@@ -37,11 +44,8 @@ namespace MonsterTradingCardsGame_3
             if ((int)Enums.CardTypes.Elve == 4)
             {
                 Console.WriteLine("richtig!");
-            }
+            }*/
 
-            Server.Control server = new Server.Control();
-            server.ServerControl();
-            Console.WriteLine("fertig");
 
             /*Console.WriteLine("Branch: Development");
             Console.WriteLine("Programm MonsterTradingCardsGame Start!\n");
