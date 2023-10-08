@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonsterTradingCardsGame_3.Users;
+using System;
 
 namespace MonsterTradingCardsGame_3
 {
@@ -6,7 +7,20 @@ namespace MonsterTradingCardsGame_3
     {
         static void Main(string[] args)
         {
-            Enums.CardTypes test = Enums.CardTypes.Elve;
+            Console.WriteLine("V3: Branch: Development");
+
+            Users.AllUsers userList = new Users.AllUsers();
+            Users.User user1 = new Users.User("Herbert", "abcde123", userList);
+            Users.User user2 = new Users.User("Anne", "myPasswor3", userList);
+
+            List<User> listOfUsers = new List<User>();
+            listOfUsers.Add(user1);
+            listOfUsers.Add(user2);
+
+            userList.PrintMultipleUsers(listOfUsers);
+
+
+            /*Enums.CardTypes test = Enums.CardTypes.Elve;
             Console.WriteLine(test);
             Console.WriteLine((int)Enums.CardTypes.Elve);
             if ((int)Enums.CardTypes.Elve == 4)
@@ -14,10 +28,9 @@ namespace MonsterTradingCardsGame_3
                 Console.WriteLine("richtig!");
             }
 
-            /*Server.Control server = new Server.Control();
-
+            Server.Control server = new Server.Control();
             server.ServerControl();
-            Console.WriteLine("fertig");*/
+            Console.WriteLine("fertig");
 
             /*Console.WriteLine("Branch: Development");
             Console.WriteLine("Programm MonsterTradingCardsGame Start!\n");

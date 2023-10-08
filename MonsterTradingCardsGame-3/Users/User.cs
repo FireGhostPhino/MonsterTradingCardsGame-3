@@ -9,6 +9,19 @@ namespace MonsterTradingCardsGame_3.Users
 {
     internal class User
     {
+        public User(string username, string password, AllUsers userList)
+        {
+            if(userList.IsNewUsername(username))
+            {
+                AddUser(username, password);
+                //userList.AddUser(this);
+            }
+            else
+            {
+                Console.WriteLine("User mit diesem usernamen bereits vorhanden. Bitte anderen Usernamen wählen!");
+            }
+        }
+
         private string _username;
         private string _password;
         private int _coins;
@@ -40,21 +53,12 @@ namespace MonsterTradingCardsGame_3.Users
             set { _elo = value; }
         }
 
-        public bool AddUser(string username, string password, AllUsers userList)
+        public void AddUser(string username, string password)
         {
-            if (userList.IsNewUsername(username))
-            {
-                Username = username;
-                Password = password;
-                userList.AddUser(this);
-                Coins = StandardValues.startCoins;
-                Elo = StandardValues.startElo;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Username = username;
+            Password = password;
+            Coins = StandardValues.startCoins;
+            Elo = StandardValues.startElo;
         }
 
         public bool ChangeUsername(string username, string password, string newUsername, AllUsers userList)
@@ -69,6 +73,15 @@ namespace MonsterTradingCardsGame_3.Users
             {
                 return false;
             }
+        }
+
+        public void PrintUser()
+        {
+            Console.WriteLine("\nUser:");
+            Console.WriteLine(Username);
+            Console.WriteLine(Password);
+            Console.WriteLine(Coins);
+            Console.WriteLine(Elo);
         }
     }
 }
