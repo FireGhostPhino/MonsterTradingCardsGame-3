@@ -6,10 +6,10 @@ namespace MonsterTradingCardsGame_3
     {
         static void Main(string[] args)
         {
-            Enums.CardTypes test = Enums.CardTypes.Fire_Elve;
+            Enums.CardTypes test = Enums.CardTypes.Elve;
             Console.WriteLine(test);
-            Console.WriteLine((int)Enums.CardTypes.Fire_Elve);
-            if ((int)Enums.CardTypes.Fire_Elve == 12)
+            Console.WriteLine((int)Enums.CardTypes.Elve);
+            if ((int)Enums.CardTypes.Elve == 4)
             {
                 Console.WriteLine("richtig!");
             }
