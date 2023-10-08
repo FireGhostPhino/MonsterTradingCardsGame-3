@@ -21,7 +21,8 @@ namespace MonsterTradingCardsGame_3
             userList.PrintMultipleUsers(listOfUsers);
 
             CardGenerator generator = new CardGenerator();
-            generator.GeneratePackage();
+            generator.GeneratePackageLoop(user1);
+            user1.PrintCardStack();
 
 
             /*CardGenerator gen = new CardGenerator();
