@@ -8,17 +8,24 @@ namespace MonsterTradingCardsGame_3.Cards
 {
     internal class Card
     {
-        private string _cardtype;
-        private string _elementType;
+        private Enums.CardCategories _cardcategorie;
+        private Enums.CardTypes _cardtype;
+        private Enums.Elements _elementType;
         private int _damage;
 
-        public string CardType
+        public Enums.CardCategories CardCategorie
+        {
+            get { return _cardcategorie; }
+            set { _cardcategorie = value; }
+        }
+
+        public Enums.CardTypes CardType
         {
             get { return _cardtype; }
             set { _cardtype = value; }
         }
 
-        public string ElementType
+        public Enums.Elements ElementType
         {
             get { return _elementType; }
             set { _elementType = value; }

@@ -25,6 +25,19 @@ namespace MonsterTradingCardsGame_3.Enums
         Krake
     }
 
+    public enum Elements
+    {
+        Fire,
+        Water,
+        Regular
+    }
+
+    public enum CardCategories
+    {
+        MonsterCard,
+        SpellCard
+    }
+
     internal class EnumCardTypes
     {
         /*

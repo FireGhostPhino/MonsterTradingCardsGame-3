@@ -10,7 +10,7 @@ namespace MonsterTradingCardsGame_3.Cards
     {
         public SpellCard()
         {
-            CardType = "SpellCard";
+            CardCategorie = Enums.CardCategories.SpellCard;
         }
 
         public override void TestMethod()

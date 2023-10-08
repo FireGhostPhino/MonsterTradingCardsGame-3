@@ -13,5 +13,7 @@ namespace MonsterTradingCardsGame_3
         public const int packageCost = 5;
         public const int packageSize = 5;
         public const int deckSize = 4;
+        public const int minDamage = 10;
+        public const int maxDamage = 90;
     }
 }

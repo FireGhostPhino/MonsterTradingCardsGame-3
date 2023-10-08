@@ -1,4 +1,5 @@
-﻿using MonsterTradingCardsGame_3.Users;
+﻿using MonsterTradingCardsGame_3.Cards;
+using MonsterTradingCardsGame_3.Users;
 using System;
 
 namespace MonsterTradingCardsGame_3
@@ -19,6 +20,15 @@ namespace MonsterTradingCardsGame_3
 
             userList.PrintMultipleUsers(listOfUsers);
 
+            CardGenerator generator = new CardGenerator();
+            generator.GeneratePackage();
+
+
+            /*CardGenerator gen = new CardGenerator();
+            for(int i = 0; i < 10; i++)
+            {
+                Console.WriteLine(gen.RandomNumberGenerator(0, 10));
+            }*/
 
             /*Enums.CardTypes test = Enums.CardTypes.Elve;
             Console.WriteLine(test);
