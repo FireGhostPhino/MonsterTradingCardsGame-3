@@ -11,7 +11,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class Control
     {
-        public void ServerControl()
+        public void ServerControl(Users.AllUsers userList)
         {
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
 
@@ -38,7 +38,7 @@ namespace MonsterTradingCardsGame_3.Server
                 while ((line = reader.ReadLine()) != null)
                 {
                     //Console.WriteLine(lineNumber + ": ");
-                    Console.WriteLine(line);
+                    //Console.WriteLine(line);
 
                     if(lineNumber == 0)
                     {
@@ -65,27 +65,9 @@ namespace MonsterTradingCardsGame_3.Server
 
                 BodyProcessing body = new BodyProcessing();
                 string bodyInformation = body.BodyProcesser(content_length, reader);
-                //Console.WriteLine("body:\n" + bodyInformation + "\n");
-
-                /*Console.WriteLine(":" + requestInformation);
-                Console.WriteLine(":" + requestInformation.Split('/'));*/
-
-                /*Console.WriteLine(requestInformation);
-                Console.WriteLine(requestInformation[0]);
-                Console.WriteLine(requestInformation.ToString());
-                string test = requestInformation.ToString();
-                string test1 = test.Split(" ");
-                Console.WriteLine("test1: " + test1);
-                Console.WriteLine(": " + requestInformation.Split(' '));
-
-                string test2;
-                foreach (var item in requestInformation)
-                {
-                    test2 += item;
-                }*/
 
                 RequestReacter reactor = new RequestReacter();
-                reactor.ProcessRequest(requestInformation, bodyInformation);
+                reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
 
                 HTTP_Response response = new HTTP_Response();
                 response.HTTPResponse(writer);
@@ -94,6 +76,10 @@ namespace MonsterTradingCardsGame_3.Server
                 {
                     break;
                 }
+
+                /*writer.Flush();
+                writer.Close();
+                reader.Close();*/
             }
         }
     }

@@ -8,7 +8,7 @@ namespace MonsterTradingCardsGame_3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("V2");
+            Console.WriteLine("V3");
 
             Users.AllUsers userList = new Users.AllUsers();
             Users.User user1 = new Users.User("Herbert", "abcde123", userList);
@@ -25,8 +25,8 @@ namespace MonsterTradingCardsGame_3
             user1.PrintCardStack();
 
             Server.Control server = new Server.Control();
-            server.ServerControl();
-            Console.WriteLine("fertig");
+            server.ServerControl(userList);
+            Console.WriteLine("End Server loop");
 
             /*Console.WriteLine("V3: Branch: Development");
 
