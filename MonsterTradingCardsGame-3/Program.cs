@@ -2,6 +2,8 @@
 using MonsterTradingCardsGame_3.Users;
 using System;
 
+//Opera übernimmt Verbindung und kein anderer kann dann mehr Anfragen schicken! Wieso?
+
 namespace MonsterTradingCardsGame_3
 {
     internal class Program

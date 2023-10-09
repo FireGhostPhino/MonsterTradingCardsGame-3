@@ -15,7 +15,7 @@ namespace MonsterTradingCardsGame_3.Server
         {
             string[] requestSplitted = requestInformation.Split(' ');
             string requestType = requestSplitted[0];
-            var requestPath = requestSplitted[1].ToString();
+            var requestPath = requestSplitted[1];
             string[] pathSplitted;
             string parameters;
 
