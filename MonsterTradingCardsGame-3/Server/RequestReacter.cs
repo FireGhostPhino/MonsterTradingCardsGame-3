@@ -6,28 +6,67 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using MonsterTradingCardsGame_3.Cards;
+using System.Reflection;
 
 namespace MonsterTradingCardsGame_3.Server
 {
     internal class RequestReacter
     {
-        public void ProcessRequest(string requestInformation, string bodyInformation, Users.AllUsers userList, int content_length)
+        public int ProcessRequest(string requestInformation, string bodyInformation, Users.AllUsers userList, int content_length)
         {
             string[] requestSplitted = requestInformation.Split(' ');
-            string requestType = requestSplitted[0];
-            var requestPath = requestSplitted[1];
+            string requestType;
+            string requestPath;
             string[] pathSplitted;
             string parameters;
 
-            Console.WriteLine("\n\nRequest: ");
-            Console.WriteLine("Length: " + requestSplitted.Length);
-            Console.WriteLine("Type: " + requestType);
-            Console.WriteLine("Path: " + requestPath);
+            if(requestSplitted.Length > 1 ) 
+            {
+                requestType = requestSplitted[0];
+                requestPath = requestSplitted[1];
 
-            if(requestPath.Length > 1)
+                Console.WriteLine("\n\nRequest: ");
+                Console.WriteLine("Length: " + requestSplitted.Length);
+                Console.WriteLine("Type: " + requestType);
+                Console.WriteLine("Path: " + requestPath);
+            }
+            else
+            {
+                return 1;
+            }
+
+            bool isValidRequest = false;
+            for (int i = 0; i < Enum.GetNames(typeof(Enums.RequestTypes)).Length; i++)
+            {
+                if (requestType == Enum.GetNames(typeof(Enums.RequestTypes))[i])
+                {
+                    isValidRequest = true;
+                    break;
+                }
+            }
+            if (!isValidRequest) 
+            {
+                return 2;
+            }
+
+            string[] bodyLines;
+            if(content_length > 0 )
+            {
+                bodyLines = bodyInformation.Split("\n");
+                Console.WriteLine("\nBody: ");
+                Console.WriteLine("Number of Lines: " + bodyLines.Length);
+                for(int i = 0; i < bodyLines.Length; i++)
+                {
+                    Console.WriteLine(bodyLines[i]);
+                }
+            }
+
+            string[] parametersSplitted;
+            if (requestPath.Length > 1 && isValidRequest)
             {
                 pathSplitted = requestPath.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                string[] parametersSplitted = pathSplitted[pathSplitted.Length - 1].Split("?");
+                parametersSplitted = pathSplitted[pathSplitted.Length - 1].Split("?");
                 pathSplitted[pathSplitted.Length - 1] = parametersSplitted[0];
                 if (pathSplitted[0] != "favicon.ico")
                 {
@@ -44,22 +83,22 @@ namespace MonsterTradingCardsGame_3.Server
                         Console.WriteLine(parameters);
                     }
                 }
-            }
 
-            if(content_length > 0 )
-            {
-                string[] bodyLines = bodyInformation.Split("\n");
-                Console.WriteLine("\nBody: ");
-                Console.WriteLine("Number of Lines: " + bodyLines.Length);
-                for(int i = 0; i < bodyLines.Length; i++)
+                if (pathSplitted[0] == Enums.PathTypes.cards.ToString())
                 {
-                    Console.WriteLine(bodyLines[i]);
+                    ResponseTypes.PathCards requestHandler = new ResponseTypes.PathCards(requestType, requestPath, bodyInformation);
+                }
+                else if(pathSplitted[0] == Enums.PathTypes.deck.ToString())
+                {
+                    ResponseTypes.PathDeck requestHandler = new ResponseTypes.PathDeck(requestType, requestPath, bodyInformation);
+                }
+                else
+                {
+                    return 3;
                 }
             }
 
-
-
-
+            return 0;
         }
     }
 }

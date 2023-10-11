@@ -1,6 +1,10 @@
 ﻿using MonsterTradingCardsGame_3.Cards;
 using MonsterTradingCardsGame_3.Users;
 using System;
+using System.Net.Sockets;
+using System.Net;
+using MonsterTradingCardsGame_3.Server;
+using System.Threading;
 
 //Opera übernimmt Verbindung und kein anderer kann dann mehr Anfragen schicken! Wieso?
 
@@ -27,8 +31,12 @@ namespace MonsterTradingCardsGame_3
             user1.PrintCardStack();
 
             Server.Control server = new Server.Control();
-            server.ServerControl(userList);
+            //server.ServerControl(userList);
+            server.ServerThreads(userList);
             Console.WriteLine("End Server loop");
+
+
+
 
             /*Console.WriteLine("V3: Branch: Development");
 

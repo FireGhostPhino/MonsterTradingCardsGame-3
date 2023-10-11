@@ -48,6 +48,10 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 return (-1).ToString();
             }
+            else if(command == "server:quit")
+            {
+                return (-2).ToString();
+            }
             else
             {
                 return command;
