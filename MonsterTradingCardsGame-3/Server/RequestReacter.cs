@@ -13,7 +13,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class RequestReacter
     {
-        public int ProcessRequest(string requestInformation, string bodyInformation, Users.AllUsers userList, int content_length)
+        public void ProcessRequest(string requestInformation, string bodyInformation, Users.AllUsers userList, int content_length)
         {
             string[] requestSplitted = requestInformation.Split(' ');
             string requestType;
@@ -33,7 +33,8 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else
             {
-                return 1;
+                throw new ProcessingException(1);
+                //return 1;
             }
 
             bool isValidRequest = false;
@@ -47,7 +48,8 @@ namespace MonsterTradingCardsGame_3.Server
             }
             if (!isValidRequest) 
             {
-                return 2;
+                throw new ProcessingException(2);
+                //return 2;
             }
 
             string[] bodyLines;
@@ -94,11 +96,12 @@ namespace MonsterTradingCardsGame_3.Server
                 }
                 else
                 {
-                    return 3;
+                    throw new ProcessingException(3);
+                    //return 3;
                 }
             }
 
-            return 0;
+            //return 0;
         }
     }
 }

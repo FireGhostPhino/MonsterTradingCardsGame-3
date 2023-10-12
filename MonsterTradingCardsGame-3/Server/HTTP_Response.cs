@@ -8,22 +8,16 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class HTTP_Response
     {
-        public void HTTPResponse(StreamWriter writer, int returnCode)
+        public void CreateHTTPResponse(StreamWriter writer, int returnCode)
         {
             //write the HTTP response
             if(returnCode == 0)
             {
-                writer.WriteLine("HTTP/1.1 200 OK");
-                writer.WriteLine("Content-Type: text/html; charset=utf-8");
-                writer.WriteLine();
-                writer.WriteLine("<html><body><h1>Request ok</h1></body></html>");
+                
             }
             else if(returnCode == 1)
             {
-                writer.WriteLine("HTTP/1.1 400 Bad Request");
-                writer.WriteLine("Content-Type: text/html; charset=utf-8");
-                writer.WriteLine();
-                writer.WriteLine("<html><body><h1>Error in request occured!</h1></body></html>");
+                
             }
             else if (returnCode == 3)
             {
@@ -39,6 +33,22 @@ namespace MonsterTradingCardsGame_3.Server
                 writer.WriteLine();
                 writer.WriteLine("<html><body><h1>Unknown Error occured!</h1></body></html>");
             }
+        }
+
+        public void CreateOKResponse(StreamWriter writer)
+        {
+            writer.WriteLine("HTTP/1.1 200 OK");
+            writer.WriteLine("Content-Type: text/html; charset=utf-8");
+            writer.WriteLine();
+            writer.WriteLine("<html><body><h1>Request ok</h1></body></html>");
+        }
+
+        public void CreateERRORResponse(StreamWriter writer, int errorCode)
+        {
+            writer.WriteLine("HTTP/1.1 400 Bad Request");
+            writer.WriteLine("Content-Type: text/html; charset=utf-8");
+            writer.WriteLine();
+            writer.WriteLine("<html><body><h1>Error in request occured!</h1></body></html>");
         }
     }
 }

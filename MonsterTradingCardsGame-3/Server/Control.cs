@@ -40,12 +40,12 @@ namespace MonsterTradingCardsGame_3.Server
                 }
                 var clientSocket = httpServer.AcceptTcpClient();
                 threads.Add(new(() => ServerControl(userList, clientSocket, i)));
-                threads[threads.Count - 1].Start();
+                threads[threads.Count - 1]?.Start();
                 //Console.WriteLine("quit d: " + serverquit);
                 if(threadquit != -1 && threads[threadquit] != null)
                 {
                     //Console.WriteLine("Thread " + threadquit + "joined");
-                    threads[threadquit].Join();
+                    threads[threadquit]?.Join();
                     threads[threadquit] = null;
                     threadquit = -1;
                 }
@@ -134,10 +134,19 @@ namespace MonsterTradingCardsGame_3.Server
                 string bodyInformation = body.BodyProcesser(content_length, reader);
 
                 RequestReacter reactor = new RequestReacter();
-                int returnCode = reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
+                //int returnCode = reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
+                try
+                {
+                    reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
+                    HTTP_Response response = new HTTP_Response();
+                    response.CreateOKResponse(writer);
+                }
+                catch (ProcessingException e)
+                {
+                    HTTP_Response response = new HTTP_Response();
+                    response.CreateERRORResponse(writer, e.ErrorCode);
+                }
 
-                HTTP_Response response = new HTTP_Response();
-                response.HTTPResponse(writer, returnCode);
 
                 if (bodyInformation == "-1" || clientSocket.Connected == false)
                 {
