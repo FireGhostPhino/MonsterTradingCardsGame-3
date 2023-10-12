@@ -8,7 +8,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class HTTP_Response
     {
-        public void CreateHTTPResponse(StreamWriter writer, int returnCode)
+        /*public void CreateHTTPResponse(StreamWriter writer, int returnCode)
         {
             //write the HTTP response
             if(returnCode == 0)
@@ -33,7 +33,7 @@ namespace MonsterTradingCardsGame_3.Server
                 writer.WriteLine();
                 writer.WriteLine("<html><body><h1>Unknown Error occured!</h1></body></html>");
             }
-        }
+        }*/
 
         public void CreateOKResponse(StreamWriter writer)
         {
