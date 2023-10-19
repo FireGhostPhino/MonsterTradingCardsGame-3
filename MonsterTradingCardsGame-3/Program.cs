@@ -28,7 +28,7 @@ namespace MonsterTradingCardsGame_3
 
             CardGenerator generator = new CardGenerator();
             generator.GeneratePackageLoop(user1);
-            user1.PrintCardStack();
+            //user1.PrintCardStack();
 
             Server.Control server = new Server.Control();
             //server.ServerControl(userList);

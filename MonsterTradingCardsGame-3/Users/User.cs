@@ -9,6 +9,11 @@ namespace MonsterTradingCardsGame_3.Users
 {
     internal class User
     {
+        public User()
+        {
+            
+        }
+        
         public User(string username, string password, AllUsers userList)
         {
             if(userList.IsNewUsername(username))
