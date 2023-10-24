@@ -10,9 +10,19 @@ namespace MTCG_3.Test
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            //Assert.Pass();
             //Assert.Fail();
 
+
+            //Arrange
+            //Erstellen von Variablen, ... (alles was zum Testen notwedig ist)
+
+            //Act
+            //Aufruf von zu testender Funktion
+
+            //Assert
+            //soll-ist Vergleich findet statt
+            //Assert.
         }
     }
 }
