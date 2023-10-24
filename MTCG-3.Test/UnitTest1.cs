@@ -24,5 +24,17 @@ namespace MTCG_3.Test
             //soll-ist Vergleich findet statt
             //Assert.
         }
+
+        [Test]
+        //Statt Test2 passenden Namen geben
+        public void Test2()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+
+        }
     }
 }
