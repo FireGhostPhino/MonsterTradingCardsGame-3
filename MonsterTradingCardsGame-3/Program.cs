@@ -5,6 +5,9 @@ using System.Net.Sockets;
 using System.Net;
 using MonsterTradingCardsGame_3.Server;
 using System.Threading;
+using System.Data;
+using Npgsql;
+using System.Xml.Linq;
 
 //Opera übernimmt Verbindung und kein anderer kann dann mehr Anfragen schicken! Wieso?
 
@@ -15,6 +18,34 @@ namespace MonsterTradingCardsGame_3
         static void Main(string[] args)
         {
             Console.WriteLine("V3");
+
+
+
+
+            List<User> users = new List<User>();
+
+            string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
+            using IDbConnection connection = new NpgsqlConnection(connectionString);
+            using IDbCommand command = connection.CreateCommand();
+            connection.Open();
+            command.CommandText = "SELECT id, username, password FROM users";
+
+            using IDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                users.Add(new User()
+                {
+                    Id = reader.GetInt32(0),
+                    Username = reader.GetString(1),
+                    Password = reader.GetString(2)
+                });
+            }
+            foreach(User user in users)
+            {
+                Console.WriteLine(user.ToString());
+            }
+
+
 
             Users.AllUsers userList = new Users.AllUsers();
             Users.User user1 = new Users.User("Herbert", "abcde123", userList);

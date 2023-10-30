@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MonsterTradingCardsGame_3.Users
 {
@@ -27,12 +28,19 @@ namespace MonsterTradingCardsGame_3.Users
             }
         }
 
+        private int _id;
         private string _username;
         private string _password;
         private int _coins;
         private int _elo;
         public List<Card> cardStack;
         public List<Card> cardDeck;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public string Username
         {
@@ -107,6 +115,11 @@ namespace MonsterTradingCardsGame_3.Users
                 Console.WriteLine(cardStack[i].ElementType);
                 Console.WriteLine(cardStack[i].Damage);
             }
+        }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, Username: {Username}, Password: {Password}";
         }
     }
 }
