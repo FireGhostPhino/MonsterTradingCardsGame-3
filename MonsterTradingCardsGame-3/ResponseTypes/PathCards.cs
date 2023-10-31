@@ -10,14 +10,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 {
     internal class PathCards
     {
-        public PathCards(string requestType, string requestPath, string bodyInformation)
+        public PathCards(string[] headerInfos, string[] pathSplitted, string bodyInformation)
         {
             Console.WriteLine("Test PathCards requestHandler");
-
-
-            var credentials = JsonSerializer.Deserialize<User>(bodyInformation??"");
-
-            Console.WriteLine(credentials.Username + " _ " + credentials.Password);
         }
     }
 }

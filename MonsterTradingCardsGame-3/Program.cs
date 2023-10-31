@@ -22,8 +22,27 @@ namespace MonsterTradingCardsGame_3
 
 
 
-            List<User> users = new List<User>();
+            /*string vergluname = "pat";
+            string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
+            using IDbConnection connection = new NpgsqlConnection(connectionString);
+            using IDbCommand command = connection.CreateCommand();
+            connection.Open();
+            command.CommandText = "SELECT username FROM users";
 
+            using IDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                if(reader.GetString(0) == vergluname)
+                {
+                    Console.WriteLine("Vorhanden: ");
+                    Console.WriteLine(reader.GetString(0) + " = " + vergluname);
+                }
+            }
+
+            Console.WriteLine();*/
+
+
+            /*List<User> users = new List<User>();
             string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
             using IDbConnection connection = new NpgsqlConnection(connectionString);
             using IDbCommand command = connection.CreateCommand();
@@ -45,9 +64,13 @@ namespace MonsterTradingCardsGame_3
                 Console.WriteLine(user.ToString());
             }
 
+            Console.WriteLine("\nEnde DB \n");*/
 
 
-            Users.AllUsers userList = new Users.AllUsers();
+
+
+
+            /*Users.AllUsers userList = new Users.AllUsers();
             Users.User user1 = new Users.User("Herbert", "abcde123", userList);
             Users.User user2 = new Users.User("Anne", "myPasswor3", userList);
 
@@ -58,13 +81,13 @@ namespace MonsterTradingCardsGame_3
             userList.PrintMultipleUsers(listOfUsers);
 
             CardGenerator generator = new CardGenerator();
-            generator.GeneratePackageLoop(user1);
+            generator.GeneratePackageLoop(user1);*/
             //user1.PrintCardStack();
 
             Server.Control server = new Server.Control();
             //server.ServerControl(userList);
-            server.ServerThreads(userList);
-            Console.WriteLine("End Server loop");
+            server.ServerThreads();
+            //Console.WriteLine("End Server loop");
 
 
 

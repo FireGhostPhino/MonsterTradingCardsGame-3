@@ -12,7 +12,7 @@ namespace MonsterTradingCardsGame_3.Users
     {
         public User()
         {
-            
+            SetStartValues();
         }
         
         public User(string username, string password, AllUsers userList)
@@ -29,10 +29,12 @@ namespace MonsterTradingCardsGame_3.Users
         }
 
         private int _id;
-        private string _username;
+        private string _username = "";
         private string _password;
+        private string _newpassword;
         private int _coins;
         private int _elo;
+        private string? _token = null;
         public List<Card> cardStack;
         public List<Card> cardDeck;
 
@@ -54,6 +56,12 @@ namespace MonsterTradingCardsGame_3.Users
             set { _password = value; }
         }
 
+        public string NewPassword
+        {
+            get { return _newpassword; }
+            set { _newpassword = value; }
+        }
+
         public int Coins
         {
             get { return _coins; }
@@ -66,6 +74,12 @@ namespace MonsterTradingCardsGame_3.Users
             set { _elo = value; }
         }
 
+        public string Token
+        {
+            get { return _token; }
+            set { _token = value; }
+        }
+
         public void AddUser(string username, string password)
         {
             Username = username;
@@ -74,7 +88,15 @@ namespace MonsterTradingCardsGame_3.Users
             Elo = StandardValues.startElo;
             cardStack = new List<Card>();
             cardDeck = new List<Card>();
-    }
+        }
+
+        public void SetStartValues()
+        {
+            Coins = StandardValues.startCoins;
+            Elo = StandardValues.startElo;
+            cardStack = new List<Card>();
+            cardDeck = new List<Card>();
+        }
 
         public bool ChangeUsername(string username, string password, string newUsername, AllUsers userList)
         {
@@ -119,7 +141,7 @@ namespace MonsterTradingCardsGame_3.Users
 
         public override string ToString()
         {
-            return $"Id: {Id}, Username: {Username}, Password: {Password}";
+            return $"Id: {Id}, Username: {Username}, Password: {Password}, Coins: {Coins}, Elo: {Elo}";
         }
     }
 }

@@ -15,5 +15,7 @@ namespace MonsterTradingCardsGame_3
         public const int deckSize = 4;
         public const int minDamage = 10;
         public const int maxDamage = 90;
+        public const string tokenPre = "Bearer ";
+        public const string tokenPost = "-mtcgToken";
     }
 }

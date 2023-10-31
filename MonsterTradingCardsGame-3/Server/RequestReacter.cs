@@ -13,7 +13,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class RequestReacter
     {
-        public void ProcessRequest(string requestInformation, string bodyInformation, Users.AllUsers userList, int content_length)
+        public void ProcessRequest(string requestInformation, string bodyInformation, string[] headerInfos, HTTP_Response response)
         {
             string[] requestSplitted = requestInformation.Split(' ');
             string requestType;
@@ -53,7 +53,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
 
             string[] bodyLines;
-            if(content_length > 0 )
+            if (int.Parse(headerInfos[0]) > 0 )
             {
                 bodyLines = bodyInformation.Split("\n");
                 Console.WriteLine("\nBody: ");
@@ -86,19 +86,9 @@ namespace MonsterTradingCardsGame_3.Server
                     }
                 }
 
-                if (pathSplitted[0] == Enums.PathTypes.cards.ToString())
-                {
-                    ResponseTypes.PathCards requestHandler = new ResponseTypes.PathCards(requestType, requestPath, bodyInformation);
-                }
-                else if(pathSplitted[0] == Enums.PathTypes.deck.ToString())
-                {
-                    ResponseTypes.PathDeck requestHandler = new ResponseTypes.PathDeck(requestType, requestPath, bodyInformation);
-                }
-                else
-                {
-                    throw new ProcessingException(3);
-                    //return 3;
-                }
+                headerInfos[2] = requestType;
+                headerInfos[3] = requestPath;
+                RequestFunctionCaller requestFunctionCaller = new RequestFunctionCaller(pathSplitted, headerInfos, bodyInformation, response);
             }
 
             //return 0;

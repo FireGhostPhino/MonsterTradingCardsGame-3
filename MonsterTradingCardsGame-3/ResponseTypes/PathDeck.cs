@@ -8,7 +8,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 {
     internal class PathDeck
     {
-        public PathDeck(string requestType, string requestPath, string bodyInformation)
+        public PathDeck(string[] headerInfos, string[] pathSplitted, string bodyInformation)
         {
             Console.WriteLine("Test PathDeck requestHandler");
         }

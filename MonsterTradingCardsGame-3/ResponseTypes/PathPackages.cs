@@ -8,6 +8,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 {
     internal class PathPackages
     {
-
+        public PathPackages(string[] headerInfos, string[] pathSplitted, string bodyInformation)
+        {
+            Console.WriteLine("Test PathPackages requestHandler");
+        }
     }
 }

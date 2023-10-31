@@ -8,6 +8,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 {
     internal class PathScoreboard
     {
-
+        public PathScoreboard(string[] headerInfos, string[] pathSplitted, string bodyInformation)
+        {
+            Console.WriteLine("Test PathScoreboard requestHandler");
+        }
     }
 }

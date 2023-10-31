@@ -21,7 +21,7 @@ namespace MonsterTradingCardsGame_3.Server
         private int serverquit;
         private int threadquit;
 
-        public void ServerThreads(Users.AllUsers userList)
+        public void ServerThreads()
         {
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
 
@@ -39,7 +39,7 @@ namespace MonsterTradingCardsGame_3.Server
                     break;
                 }
                 var clientSocket = httpServer.AcceptTcpClient();
-                threads.Add(new(() => ServerControl(userList, clientSocket, i)));
+                threads.Add(new(() => ServerControl(clientSocket, i)));
                 threads[threads.Count - 1]?.Start();
                 //Console.WriteLine("quit d: " + serverquit);
                 if(threadquit != -1 && threads[threadquit] != null)
@@ -66,7 +66,7 @@ namespace MonsterTradingCardsGame_3.Server
             Console.WriteLine("Alle Threads eingesammelt, Server beendet!");*/
         }
 
-        public void ServerControl(Users.AllUsers userList, TcpClient clientSocket, int threadNumber)
+        public void ServerControl(TcpClient clientSocket, int threadNumber)
         {
             //Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
 
@@ -95,6 +95,8 @@ namespace MonsterTradingCardsGame_3.Server
                 int content_length = 0;
                 int lineNumber = 0;
                 requestInformation = string.Empty;
+                string token = "";
+                string[] headerInfos = new string[4];
 
                 if (clientSocket.Connected == false)
                 {
@@ -124,27 +126,39 @@ namespace MonsterTradingCardsGame_3.Server
                         var parts = line.Split(':');
                         if (parts.Length == 2 && parts[0] == "Content-Length")
                         {
-                            content_length = int.Parse(parts[1].Trim());
+                            //content_length = int.Parse(parts[1].Trim());
+                            headerInfos[0] = parts[1].Trim();
+                        }
+                        else if(parts.Length == 2 && parts[0] == "Authorization")
+                        {
+                            token = parts[1].Trim();
+                            headerInfos[1] = parts[1].Trim();
+                            Console.WriteLine("________" + token + "__");
                         }
                     }
                     lineNumber++;
                 }
 
                 BodyProcessing body = new BodyProcessing();
-                string bodyInformation = body.BodyProcesser(content_length, reader);
+                string bodyInformation = body.BodyProcesser(int.Parse(headerInfos[0]), reader);
 
-                RequestReacter reactor = new RequestReacter();
-                //int returnCode = reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
                 try
                 {
-                    reactor.ProcessRequest(requestInformation, bodyInformation, userList, content_length);
+                    RequestReacter reactor = new RequestReacter();
                     HTTP_Response response = new HTTP_Response();
+
+                    reactor.ProcessRequest(requestInformation, bodyInformation, headerInfos, response);
                     response.CreateOKResponse(writer);
                 }
                 catch (ProcessingException e)
                 {
                     HTTP_Response response = new HTTP_Response();
                     response.CreateERRORResponse(writer, e.ErrorCode);
+                }
+                catch(Exception e)
+                {
+                    HTTP_Response response = new HTTP_Response();
+                    response.CreateERRORResponse(writer, 3);
                 }
 
 
