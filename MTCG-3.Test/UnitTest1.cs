@@ -1,3 +1,5 @@
+using MonsterTradingCardsGame_3;
+
 namespace MTCG_3.Test
 {
     public class MTCGUnitTests
