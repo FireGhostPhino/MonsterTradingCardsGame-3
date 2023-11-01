@@ -21,6 +21,12 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             Console.WriteLine("Test PathUsers requestHandler");
 
+            if (headerInfos[1] == "" || ((pathSplitted.Length > 1) &&
+                (headerInfos[1] != (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost))))
+            {
+                throw new InvalidDataException("2");
+            }
+
             using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             string requestType = headerInfos[2];
