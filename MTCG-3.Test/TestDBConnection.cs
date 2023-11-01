@@ -16,7 +16,7 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testDBConnection()
+        public void TestCreateDBConnection()
         {
             //Arrange
             string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
@@ -27,10 +27,13 @@ namespace MTCG_3.Test
 
             //Assert
             connection.Open();
+
+            //If no Exception Error, Test will pass
+            Assert.Pass();
         }
 
         [Test]
-        public void testDBDataRequest()
+        public void TestDBDataRequest()
         {
             //Arrange
             string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";

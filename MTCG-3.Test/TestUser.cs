@@ -14,42 +14,42 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testUserConstructorCardStack()
+        public void TestUserConstructorCardStack()
         {
             //Act
-            MonsterTradingCardsGame_3.Users.User user = new MonsterTradingCardsGame_3.Users.User();
+            MonsterTradingCardsGame_3.Users.User user = new();
 
             //Assert
             Assert.That(user.cardStack, Is.Not.EqualTo(null));
         }
 
         [Test]
-        public void testUserConstructorCardDeck()
+        public void TestUserConstructorCardDeck()
         {
             //Act
-            MonsterTradingCardsGame_3.Users.User user = new MonsterTradingCardsGame_3.Users.User();
+            MonsterTradingCardsGame_3.Users.User user = new();
 
             //Assert
             Assert.That(user.cardDeck, Is.Not.EqualTo(null));
         }
 
         [Test]
-        public void testUserConstructorCoins()
+        public void TestUserConstructorCoins()
         {
             //Act
-            MonsterTradingCardsGame_3.Users.User user = new MonsterTradingCardsGame_3.Users.User();
+            MonsterTradingCardsGame_3.Users.User user = new();
 
             //Assert
             Assert.That(user.Coins, Is.EqualTo(MonsterTradingCardsGame_3.StandardValues.startCoins));
         }
 
         [Test]
-        public void testPayPackage()
+        public void TestPayPackage()
         {
             //Arrange
             string testUsern = "testuser";
             string testPassw = "testpassw";
-            MonsterTradingCardsGame_3.Users.User user = new MonsterTradingCardsGame_3.Users.User()
+            MonsterTradingCardsGame_3.Users.User user = new()
             {
                 Username = testUsern,
                 Password = testPassw,

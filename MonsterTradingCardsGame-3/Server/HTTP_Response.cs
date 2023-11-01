@@ -12,13 +12,15 @@ namespace MonsterTradingCardsGame_3.Server
     internal class HTTP_Response
     {
         private Users.User? _userData = null;
-        public List<User> allUserData = new List<User>();
+        public List<User> allUserData = new();
+        public List<string>? scoreboard = null;
 
         public Users.User UserData
         {
             get { return _userData; }
             set { _userData = value; }
         }
+
 
         public void CreateOKResponse(StreamWriter writer)
         {
@@ -33,16 +35,31 @@ namespace MonsterTradingCardsGame_3.Server
                     writer.WriteLine("<p>" + user.ToString() + "</p>");
                 }
             }
+            if (scoreboard != null && scoreboard.Count > 1)
+            {
+                int i = 0;
+                writer.WriteLine("Platz: Username: Elo");
+                foreach (var line in scoreboard)
+                {
+                    writer.WriteLine("<p>Platz " + (i+1) + ": " + line + "</p>");
+                    i++;
+                }
+            }
+            else if(scoreboard != null && scoreboard.Count == 1)
+            {
+                writer.WriteLine("Username: Elo");
+                writer.WriteLine("<p>" + scoreboard[0] + "</p>");
+            }
             writer.WriteLine("</body></html>");
         }
 
 
-        public void CreateERRORResponse(StreamWriter writer, int errorCode)
+        public void CreateERRORResponse(StreamWriter writer, string errorCode)
         {
             writer.WriteLine("HTTP/1.1 400 Bad Request");
             writer.WriteLine("Content-Type: text/html; charset=utf-8");
             writer.WriteLine();
-            writer.WriteLine("<html><body><h1>Error in request occured!</h1></body></html>");
+            writer.WriteLine("<html><body><h1>Error in request occured!</h1><a>Error: " + errorCode + "</a></body></html>");
         }
     }
 }

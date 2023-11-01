@@ -15,7 +15,8 @@ namespace MonsterTradingCardsGame_3.Enums
         Elve,
         Dragon,
         Knight,
-        Krake
+        Krake,
+        Wizzard
     }
 
     public enum NonElementCardTypes

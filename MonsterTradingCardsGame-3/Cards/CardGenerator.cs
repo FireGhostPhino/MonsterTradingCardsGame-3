@@ -12,7 +12,7 @@ namespace MonsterTradingCardsGame_3.Cards
     {
         public int RandomNumberGenerator(int minimum, int maximum)
         {
-            Random random = new Random();
+            Random random = new();
             return random.Next(minimum, maximum);
         }
 
@@ -28,7 +28,7 @@ namespace MonsterTradingCardsGame_3.Cards
                 {
                     break;
                 }
-                List<Card> package = new List<Card>();
+                List<Card> package = new();
                 package = GeneratePackage(package);
                 PrintPackage(package);
                 Console.WriteLine("Soll das Package erworben werden um 5 Münzen? (y/N):");
@@ -57,7 +57,7 @@ namespace MonsterTradingCardsGame_3.Cards
 
         public Card GenerateCard()
         {
-            Card card = new Card();
+            Card card = new();
             int cardType = RandomNumberGenerator(0, Enum.GetNames(typeof(Enums.CardTypes)).Length);
             card.CardType = (Enums.CardTypes)cardType;
 

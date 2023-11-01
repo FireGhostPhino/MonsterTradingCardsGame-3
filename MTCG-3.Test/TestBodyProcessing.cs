@@ -10,10 +10,10 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testCommandListenerThreadQuit()
+        public void TestCommandListenerThreadQuit()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new();
             string command = "quit";
 
             //Act
@@ -24,10 +24,10 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testCommandListenerServerQuit()
+        public void TestCommandListenerServerQuit()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new();
             string command = "server:quit";
 
             //Act
@@ -38,10 +38,10 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testCommandListenerOtherCommand()
+        public void TestCommandListenerOtherCommand()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new();
             string command = "irgendeinCommand";
 
             //Act

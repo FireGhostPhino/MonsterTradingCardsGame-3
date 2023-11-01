@@ -28,7 +28,7 @@ namespace MonsterTradingCardsGame_3.Server
             var httpServer = new TcpListener(IPAddress.Loopback, 10001);
             httpServer.Start();
 
-            List<Thread?> threads = new List<Thread?>();
+            List<Thread?> threads = new();
             int i = 0;
 
             while (true)
@@ -40,7 +40,7 @@ namespace MonsterTradingCardsGame_3.Server
                 }
                 var clientSocket = httpServer.AcceptTcpClient();
                 threads.Add(new(() => ServerControl(clientSocket, i)));
-                threads[threads.Count - 1]?.Start();
+                threads[^1]?.Start();
                 //Console.WriteLine("quit d: " + serverquit);
                 if(threadquit != -1 && threads[threadquit] != null)
                 {
@@ -70,8 +70,8 @@ namespace MonsterTradingCardsGame_3.Server
         {
             //Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
 
-            string? requestType;
-            string? path;
+            //string? requestType;
+            //string? path;
 
             //var httpServer = new TcpListener(IPAddress.Loopback, 10001);
             //httpServer.Start();
@@ -92,7 +92,7 @@ namespace MonsterTradingCardsGame_3.Server
                 string? line;
                 string requestInformation;
                 bool isBody = false;
-                int content_length = 0;
+                //int content_length = 0;
                 int lineNumber = 0;
                 requestInformation = string.Empty;
                 string token = "";
@@ -141,30 +141,30 @@ namespace MonsterTradingCardsGame_3.Server
                     lineNumber++;
                 }
 
-                BodyProcessing body = new BodyProcessing();
+                BodyProcessing body = new();
                 string bodyInformation = body.BodyProcesser(int.Parse(headerInfos[0]), reader);
 
                 try
                 {
-                    if (headerInfos[1] == "")
+                    /*if (headerInfos[1] == "")
                     {
                         throw new InvalidDataException("7");
-                    }
-                    RequestReacter reactor = new RequestReacter();
-                    HTTP_Response response = new HTTP_Response();
+                    }*/
+                    RequestReacter reactor = new();
+                    HTTP_Response response = new();
 
                     reactor.ProcessRequest(requestInformation, bodyInformation, headerInfos, response);
                     response.CreateOKResponse(writer);
                 }
                 catch (ProcessingException e)
                 {
-                    HTTP_Response response = new HTTP_Response();
-                    response.CreateERRORResponse(writer, e.ErrorCode);
+                    HTTP_Response response = new();
+                    response.CreateERRORResponse(writer, e.ErrorCode.ToString());
                 }
                 catch(Exception e)
                 {
-                    HTTP_Response response = new HTTP_Response();
-                    response.CreateERRORResponse(writer, 3);
+                    HTTP_Response response = new();
+                    response.CreateERRORResponse(writer, e.Message);
                 }
 
 

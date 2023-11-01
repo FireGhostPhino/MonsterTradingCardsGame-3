@@ -13,39 +13,39 @@ namespace MonsterTradingCardsGame_3.Server
         {
             if (pathSplitted[0] == Enums.PathTypes.cards.ToString())
             {
-                ResponseTypes.PathCards requestHandler = new ResponseTypes.PathCards(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathCards requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if (pathSplitted[0] == Enums.PathTypes.deck.ToString())
             {
-                ResponseTypes.PathDeck requestHandler = new ResponseTypes.PathDeck(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())
             {
-                ResponseTypes.PathPackages requestHandler = new ResponseTypes.PathPackages(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathPackages requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if (pathSplitted[0] == Enums.PathTypes.scoreboard.ToString())
             {
-                ResponseTypes.PathScoreboard requestHandler = new ResponseTypes.PathScoreboard(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathScoreboard requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else if (pathSplitted[0] == Enums.PathTypes.sessions.ToString())
             {
-                ResponseTypes.PathSessions requestHandler = new ResponseTypes.PathSessions(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathSessions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if (pathSplitted[0] == Enums.PathTypes.stats.ToString())
             {
-                ResponseTypes.PathStats requestHandler = new ResponseTypes.PathStats(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathStats requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else if (pathSplitted[0] == Enums.PathTypes.tradings.ToString())
             {
-                ResponseTypes.PathTradings requestHandler = new ResponseTypes.PathTradings(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathTradings requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if (pathSplitted[0] == Enums.PathTypes.transactions.ToString())
             {
-                ResponseTypes.PathTransactions requestHandler = new ResponseTypes.PathTransactions(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathTransactions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
             else if (pathSplitted[0] == Enums.PathTypes.users.ToString())
             {
-                ResponseTypes.PathUsers requestHandler = new ResponseTypes.PathUsers(headerInfos, pathSplitted, bodyInformation, response);
+                ResponseTypes.PathUsers requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else
             {

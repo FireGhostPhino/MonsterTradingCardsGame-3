@@ -88,7 +88,7 @@ namespace MonsterTradingCardsGame_3.Server
 
                 headerInfos[2] = requestType;
                 headerInfos[3] = requestPath;
-                RequestFunctionCaller requestFunctionCaller = new RequestFunctionCaller(pathSplitted, headerInfos, bodyInformation, response);
+                RequestFunctionCaller requestFunctionCaller = new(pathSplitted, headerInfos, bodyInformation, response);
             }
 
             //return 0;

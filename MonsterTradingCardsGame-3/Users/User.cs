@@ -30,8 +30,8 @@ namespace MonsterTradingCardsGame_3.Users
 
         private int _id;
         private string _username = "";
-        private string _password;
-        private string _newpassword;
+        private string _password = "";
+        private string _newpassword = "";
         private int _coins;
         private int _elo;
         private string? _token = null;

@@ -16,23 +16,27 @@ namespace MTCG_3.Test
         }
         
         [Test]
-        public void testGenerateCardDamage()
+        public void TestGenerateCardDamage()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new MonsterTradingCardsGame_3.Cards.CardGenerator();
+            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
 
             //Act
             MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
 
             //Assert
             Assert.That(card.Damage, Is.GreaterThan(MonsterTradingCardsGame_3.StandardValues.minDamage));
+            Console.WriteLine(card.CardCategorie);
+            Console.WriteLine(card.CardType);
+            Console.WriteLine(card.ElementType);
+            Console.WriteLine(card.Damage);
         }
 
         [Test]
-        public void testGenerateCardCategorie()
+        public void TestGenerateCardCategorie()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new MonsterTradingCardsGame_3.Cards.CardGenerator();
+            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
 
             //Act
             MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
@@ -42,10 +46,10 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testRandomNumberGenerator()
+        public void TestRandomNumberGenerator()
         {
             //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new MonsterTradingCardsGame_3.Cards.CardGenerator();
+            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
             int minimum = 5;
             int maximum = 10;
 
