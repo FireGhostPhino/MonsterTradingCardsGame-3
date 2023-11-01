@@ -12,11 +12,5 @@ namespace MonsterTradingCardsGame_3.Cards
         {
             CardCategorie = Enums.CardCategories.MonsterCard;
         }
-
-        public override void TestMethod()
-        {
-            Console.WriteLine("Print Class-Child MonsterCard");
-            TestParentClass();
-        }
     }
 }

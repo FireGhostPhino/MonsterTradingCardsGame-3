@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3.Server
 {
-    internal class BodyProcessing
+    public class BodyProcessing
     {
         public string BodyProcesser(int content_length, StreamReader reader)
         {

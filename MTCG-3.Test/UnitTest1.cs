@@ -4,12 +4,12 @@ namespace MTCG_3.Test
 {
     public class MTCGUnitTests
     {
-        [SetUp]
+        //[SetUp]
         public void Setup()
         {
         }
 
-        [Test]
+        //[Test]
         public void Test1()
         {
             //Assert.Pass();
@@ -27,7 +27,7 @@ namespace MTCG_3.Test
             //Assert.
         }
 
-        [Test]
+        //[Test]
         //Statt Test2 passenden Namen geben
         public void Test2()
         {

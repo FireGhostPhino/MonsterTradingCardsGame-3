@@ -10,37 +10,45 @@ namespace MTCG_3.Test
         }
 
         [Test]
-        public void testCommandListener()
+        public void testCommandListenerThreadQuit()
         {
             //Arrange
-            //BodyProcessing body = new BodyProcessing();
-
-
-
-            Assert.Pass();
-            //Assert.Fail();
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            string command = "quit";
 
             //Act
-
+            string returnvalue = body.CommandListener(command);
 
             //Assert
-
-
+            Assert.That(returnvalue, Is.EqualTo("-1"));
         }
 
         [Test]
-        public void test2()
+        public void testCommandListenerServerQuit()
         {
             //Arrange
-
-            Assert.IsTrue(true);
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            string command = "server:quit";
 
             //Act
-
+            string returnvalue = body.CommandListener(command);
 
             //Assert
+            Assert.That(returnvalue, Is.EqualTo("-2"));
+        }
 
+        [Test]
+        public void testCommandListenerOtherCommand()
+        {
+            //Arrange
+            MonsterTradingCardsGame_3.Server.BodyProcessing body = new MonsterTradingCardsGame_3.Server.BodyProcessing();
+            string command = "irgendeinCommand";
 
+            //Act
+            string returnvalue = body.CommandListener(command);
+
+            //Assert
+            Assert.That(returnvalue, Is.EqualTo(command));
         }
     }
 }

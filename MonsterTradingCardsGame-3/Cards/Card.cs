@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3.Cards
 {
-    internal class Card
+    public class Card
     {
         private Enums.CardCategories _cardcategorie;
         private Enums.CardTypes _cardtype;
         private Enums.Elements _elementType;
-        private int _damage;
+        private int _damage = 0;
 
         public Enums.CardCategories CardCategorie
         {
@@ -35,19 +35,6 @@ namespace MonsterTradingCardsGame_3.Cards
         {
             get { return _damage; }
             set { _damage = value; }
-        }
-
-
-
-
-        public void TestParentClass()
-        {
-            Console.WriteLine("Parent Class Function call");
-        }
-
-        public virtual void TestMethod()
-        {
-            Console.WriteLine("Print Class-Parent Card");
         }
     }
 }

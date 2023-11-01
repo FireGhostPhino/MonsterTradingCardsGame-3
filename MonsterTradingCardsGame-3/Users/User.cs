@@ -8,14 +8,14 @@ using System.Xml.Linq;
 
 namespace MonsterTradingCardsGame_3.Users
 {
-    internal class User
+    public class User
     {
         public User()
         {
             SetStartValues();
         }
         
-        public User(string username, string password, AllUsers userList)
+        /*public User(string username, string password, AllUsers userList)
         {
             if(userList.IsNewUsername(username))
             {
@@ -26,7 +26,7 @@ namespace MonsterTradingCardsGame_3.Users
             {
                 Console.WriteLine("User mit diesem usernamen bereits vorhanden. Bitte anderen Usernamen wählen!");
             }
-        }
+        }*/
 
         private int _id;
         private string _username = "";
@@ -35,8 +35,8 @@ namespace MonsterTradingCardsGame_3.Users
         private int _coins;
         private int _elo;
         private string? _token = null;
-        public List<Card> cardStack;
-        public List<Card> cardDeck;
+        public List<Card>? cardStack = null;
+        public List<Card>? cardDeck = null;
 
         public int Id
         {
@@ -98,7 +98,7 @@ namespace MonsterTradingCardsGame_3.Users
             cardDeck = new List<Card>();
         }
 
-        public bool ChangeUsername(string username, string password, string newUsername, AllUsers userList)
+        /*public bool ChangeUsername(string username, string password, string newUsername, AllUsers userList)
         {
             if (userList.IsNewUsername(newUsername) && userList.IsCorrectPassword(username, password))
             {
@@ -110,7 +110,7 @@ namespace MonsterTradingCardsGame_3.Users
             {
                 return false;
             }
-        }
+        }*/
 
         public void PayPackage()
         {

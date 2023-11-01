@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3.Cards
 {
-    internal class CardGenerator
+    public class CardGenerator
     {
         public int RandomNumberGenerator(int minimum, int maximum)
         {
