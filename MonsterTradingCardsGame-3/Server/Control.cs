@@ -97,6 +97,8 @@ namespace MonsterTradingCardsGame_3.Server
                 requestInformation = string.Empty;
                 string token = "";
                 string[] headerInfos = new string[4];
+                headerInfos[0] = "0";
+                headerInfos[1] = "";
 
                 if (clientSocket.Connected == false)
                 {
@@ -133,7 +135,7 @@ namespace MonsterTradingCardsGame_3.Server
                         {
                             token = parts[1].Trim();
                             headerInfos[1] = parts[1].Trim();
-                            Console.WriteLine("________" + token + "__");
+                            //Console.WriteLine("__" + token + "__");
                         }
                     }
                     lineNumber++;
@@ -144,6 +146,10 @@ namespace MonsterTradingCardsGame_3.Server
 
                 try
                 {
+                    if (headerInfos[1] == "")
+                    {
+                        throw new InvalidDataException("7");
+                    }
                     RequestReacter reactor = new RequestReacter();
                     HTTP_Response response = new HTTP_Response();
 

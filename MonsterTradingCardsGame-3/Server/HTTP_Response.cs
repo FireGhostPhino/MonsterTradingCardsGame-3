@@ -12,6 +12,7 @@ namespace MonsterTradingCardsGame_3.Server
     internal class HTTP_Response
     {
         private Users.User? _userData = null;
+        public List<User> allUserData = new List<User>();
 
         public Users.User UserData
         {
@@ -24,19 +25,17 @@ namespace MonsterTradingCardsGame_3.Server
             writer.WriteLine("HTTP/1.1 200 OK");
             writer.WriteLine("Content-Type: text/html; charset=utf-8");
             writer.WriteLine();
-            writer.WriteLine("<html><body><h1>Request ok</h1><a>" + UserData + "</a></body></html>");
+            writer.WriteLine("<html><body><h1>Request ok</h1><a>" + UserData + "</a></b>");
+            if(allUserData != null)
+            {
+                foreach(var user in allUserData)
+                {
+                    writer.WriteLine("<p>" + user.ToString() + "</p>");
+                }
+            }
+            writer.WriteLine("</body></html>");
         }
 
-        public void CreateOKResponseUserData(StreamWriter writer, Users.User user)
-        {
-            var userJson = JsonSerializer.Serialize<User>(user);
-            //var user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
-
-            writer.WriteLine("HTTP/1.1 200 OK");
-            writer.WriteLine("Content-Type: text/html; charset=utf-8");
-            writer.WriteLine();
-            writer.WriteLine("<html><body><h1>Request ok</h1><a>" + user + "</a></body></html>");
-        }
 
         public void CreateERRORResponse(StreamWriter writer, int errorCode)
         {

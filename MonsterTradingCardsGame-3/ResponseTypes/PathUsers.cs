@@ -45,34 +45,52 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void GetRequest(string[] pathSplitted, string bodyInformation, IDbCommand command, string[] headerInfos, HTTP_Response response)
         {
-            string username = pathSplitted[1];
-
-            foreach(char letter in username)
+            if ((pathSplitted.Length > 1) &&
+                (headerInfos[1] == (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost)))
             {
-                if(letter.ToString() == "'")
+                string username = pathSplitted[1];
+
+                AddParameterWithValue(command, "username", DbType.String, username);
+                command.CommandText = "SELECT * FROM users WHERE username=@username";
+
+                using IDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    throw new ArgumentException("5");
+                    User user = new User()
+                    {
+                        Id = reader.GetInt32(0),
+                        Username = reader.GetString(1),
+                        Password = reader.GetString(2),
+                        Elo = reader.GetInt32(3),
+                        Coins = reader.GetInt32(4),
+                    };
+
+                    response.UserData = user;
+                }
+                else
+                {
+                    throw new ArgumentException("6");
                 }
             }
-
-            command.CommandText = "SELECT * FROM users WHERE username='" + username + "'";
-            using IDataReader reader = command.ExecuteReader();
-
-            if (reader.Read())
+            else if((headerInfos[1] == (StandardValues.tokenPre + "admin" + StandardValues.tokenPost)) ||
+                    (headerInfos[1] == (StandardValues.tokenPre + "ADMIN" + StandardValues.tokenPost)))
             {
-                User user = new User() {
-                    Id = reader.GetInt32(0),
-                    Username = reader.GetString(1),
-                    Password = reader.GetString(2),
-                    Elo = reader.GetInt32(3),
-                    Coins = reader.GetInt32(4),
-                };
+                Console.WriteLine("2");
+                command.CommandText = "SELECT * FROM users ORDER BY id ASC";
+                using IDataReader reader = command.ExecuteReader();
 
-                response.UserData = user;
-            }
-            else
-            {
-                throw new ArgumentException("6");
+                while (reader.Read())
+                {
+                    response.allUserData.Add(new User()
+                    {
+                        Id = reader.GetInt32(0),
+                        Username = reader.GetString(1),
+                        Password = reader.GetString(2),
+                        Elo = reader.GetInt32(3),
+                        Coins = reader.GetInt32(4)
+                    });
+                }
             }
         }
 
