@@ -4,17 +4,17 @@ namespace MTCG_3.Test
 {
     public class MTCGUnitTests
     {
-        //[SetUp]
+        [SetUp]
         public void Setup()
         {
         }
 
-        //[Test]
+        [Test]
         public void Test1()
         {
-            //Assert.Pass();
+            Assert.Pass();
             //Assert.Fail();
-
+            
 
             //Arrange
             //Erstellen von Variablen, ... (alles was zum Testen notwedig ist)
