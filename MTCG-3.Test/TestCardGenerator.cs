@@ -26,10 +26,10 @@ namespace MTCG_3.Test
 
             //Assert
             Assert.That(card.Damage, Is.GreaterThan(MonsterTradingCardsGame_3.StandardValues.minDamage));
-            Console.WriteLine(card.CardCategorie);
+            /*Console.WriteLine(card.CardCategorie);
             Console.WriteLine(card.CardType);
             Console.WriteLine(card.ElementType);
-            Console.WriteLine(card.Damage);
+            Console.WriteLine(card.Damage);*/
         }
 
         [Test]
