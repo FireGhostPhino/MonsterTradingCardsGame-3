@@ -105,19 +105,21 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             var user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            command.CommandText = "SELECT username FROM users WHERE username='@username'";
+            command.CommandText = "SELECT username FROM users WHERE username=@username";
             
             using IDataReader reader = command.ExecuteReader();
 
+            Console.WriteLine(user.Username);
             if (reader.Read())
             {
-                //Console.WriteLine("Username vorhanden");
+                Console.WriteLine(reader.GetString(0));
+                Console.WriteLine("Username vorhanden");
                 throw new ArgumentException("4");
             }
-            /*else
+            else
             {
                 Console.WriteLine("neuer Username");
-            }*/
+            }
 
             command.Connection.Close();
             command = Database.DBConnection.ConnectionCreate();
