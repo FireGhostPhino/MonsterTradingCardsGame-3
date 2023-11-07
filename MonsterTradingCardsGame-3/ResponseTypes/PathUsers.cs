@@ -56,8 +56,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 string username = pathSplitted[1];
 
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-                command.CommandText = "SELECT * FROM users WHERE username=@username";
+                Database.DBCommands.DBPathUsers.CommandSingleUserData(command, username);
 
                 using IDataReader reader = command.ExecuteReader();
 
@@ -83,7 +82,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     (headerInfos[1] == (StandardValues.tokenPre + "ADMIN" + StandardValues.tokenPost)))
             {
                 Console.WriteLine("2");
-                command.CommandText = "SELECT * FROM users ORDER BY id ASC";
+
+                Database.DBCommands.DBPathUsers.CommandAllUserData(command);
+
                 using IDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -104,8 +105,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             var user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            command.CommandText = "SELECT username FROM users WHERE username=@username";
+            Database.DBCommands.DBPathUsers.CommandUserExist(command, user.Username);
             
             using IDataReader reader = command.ExecuteReader();
 
@@ -124,12 +124,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             command.Connection.Close();
             command = Database.DBConnection.ConnectionCreate();
 
-            command.CommandText = "INSERT INTO users (username, password, elo, coins) " +
-            "VALUES (@username, @password, @elo, @coins)";
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.Password);
-            DBCreateParameter.AddParameterWithValue(command, "elo", DbType.Int32, user.Elo);
-            DBCreateParameter.AddParameterWithValue(command, "coins", DbType.Int32, user.Coins);
+            Database.DBCommands.DBPathUsers.CommandUserInsert(command, user);
+
             command.ExecuteNonQuery();
         }
 
