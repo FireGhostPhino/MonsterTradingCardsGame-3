@@ -68,8 +68,8 @@ namespace MonsterTradingCardsGame_3.Server
             if (requestPath.Length > 1 && isValidRequest)
             {
                 pathSplitted = requestPath.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                parametersSplitted = pathSplitted[pathSplitted.Length - 1].Split("?");
-                pathSplitted[pathSplitted.Length - 1] = parametersSplitted[0];
+                parametersSplitted = pathSplitted[^1].Split("?");
+                pathSplitted[^1] = parametersSplitted[0];
                 if (pathSplitted[0] != "favicon.ico")
                 {
                     Console.WriteLine("\nPath splitted:");

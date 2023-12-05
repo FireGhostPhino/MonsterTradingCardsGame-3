@@ -84,7 +84,7 @@ namespace MonsterTradingCardsGame_3
             generator.GeneratePackageLoop(user1);*/
             //user1.PrintCardStack();
 
-            Server.Control server = new Server.Control();
+            Server.Control server = new();
             //server.ServerControl(userList);
             server.ServerThreads();
             //Console.WriteLine("End Server loop");
