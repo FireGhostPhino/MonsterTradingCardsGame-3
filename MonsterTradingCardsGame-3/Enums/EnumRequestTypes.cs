@@ -24,7 +24,8 @@ namespace MonsterTradingCardsGame_3.Enums
         stats,
         tradings,
         transactions,
-        users
+        users,
+        chatroom
     }
 
     internal class EnumRequestTypes
