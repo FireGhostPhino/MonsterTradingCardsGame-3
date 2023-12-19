@@ -103,10 +103,15 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void PostRequest(string bodyInformation, IDbCommand command)
         {
-            User user;
+            User? user;
             try
             {
                 user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
+
+                if (user == null)
+                {
+                    throw new InvalidDataException("11");
+                }
             }
             catch (Exception e)
             {

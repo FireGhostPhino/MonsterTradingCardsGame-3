@@ -61,10 +61,15 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void PostRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
         {
-            Message message;
+            Message? message;
             try
             {
                 message = JsonSerializer.Deserialize<Message>(bodyInformation ?? "");
+
+                if(message == null)
+                {
+                    throw new InvalidDataException("11");
+                }
             }
             catch (Exception e)
             {
