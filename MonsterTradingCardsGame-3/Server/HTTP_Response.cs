@@ -14,6 +14,7 @@ namespace MonsterTradingCardsGame_3.Server
         private Users.User? _userData = null;
         public List<User> allUserData = new();
         public List<string>? scoreboard = null;
+        public List<Message> allMessages = new();
 
         public Users.User UserData
         {
@@ -49,6 +50,13 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 writer.WriteLine("Username: Elo");
                 writer.WriteLine("<p>" + scoreboard[0] + "</p>");
+            }
+            if(allMessages != null)
+            {
+                foreach (var message in allMessages)
+                {
+                    writer.WriteLine("<p>" + message.ToString() + "</p>");
+                }
             }
             writer.WriteLine("</body></html>");
         }

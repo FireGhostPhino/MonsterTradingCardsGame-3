@@ -49,7 +49,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if (pathSplitted[0] == Enums.PathTypes.chatroom.ToString())
             {
-                ResponseTypes.PathChatroom requestHandler = new(headerInfos, pathSplitted, bodyInformation) ;
+                ResponseTypes.PathChatroom requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else
             {

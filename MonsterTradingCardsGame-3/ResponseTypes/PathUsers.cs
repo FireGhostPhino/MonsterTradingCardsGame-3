@@ -103,7 +103,15 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void PostRequest(string bodyInformation, IDbCommand command)
         {
-            var user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
+            User user;
+            try
+            {
+                user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException("11");
+            }
 
             Database.DBCommands.DBPathUsers.CommandUserExist(command, user.Username);
             
