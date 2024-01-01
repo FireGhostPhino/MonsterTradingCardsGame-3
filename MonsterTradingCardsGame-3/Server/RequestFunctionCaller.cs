@@ -17,13 +17,13 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if (pathSplitted[0] == Enums.PathTypes.deck.ToString())
             {
-                ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())
             {
                 ResponseTypes.PathPackages requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.scoreboard.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.scoreboard.ToString())      //ok
             {
                 ResponseTypes.PathScoreboard requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
@@ -31,7 +31,7 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathSessions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.stats.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.stats.ToString())       //ok
             {
                 ResponseTypes.PathStats requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
@@ -43,11 +43,11 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathTransactions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.users.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.users.ToString())       //ok
             {
                 ResponseTypes.PathUsers requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.chatroom.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.chatroom.ToString())    //ok
             {
                 ResponseTypes.PathChatroom requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }

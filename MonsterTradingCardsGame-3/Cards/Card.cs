@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,19 @@ namespace MonsterTradingCardsGame_3.Cards
 {
     public class Card
     {
+        public Card() { }
+
+        private int _id;
         private Enums.CardCategories _cardcategorie;
         private Enums.CardTypes _cardtype;
         private Enums.Elements _elementType;
         private int _damage = 0;
+
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public Enums.CardCategories CardCategorie
         {
@@ -35,6 +45,11 @@ namespace MonsterTradingCardsGame_3.Cards
         {
             get { return _damage; }
             set { _damage = value; }
+        }
+
+        public override string ToString()
+        {
+            return $"CardCategorie: {CardCategorie}, CardType: {CardType}, ElementType: {ElementType}, Damage: {Damage}";
         }
     }
 }

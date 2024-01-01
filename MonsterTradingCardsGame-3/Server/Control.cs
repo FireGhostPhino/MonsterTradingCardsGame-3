@@ -23,7 +23,9 @@ namespace MonsterTradingCardsGame_3.Server
 
         public void ServerThreads()
         {
+            Console.WriteLine("in control cw test.");
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
+            Console.WriteLine("in control cw test 2");
 
             var httpServer = new TcpListener(IPAddress.Loopback, 10001);
             httpServer.Start();
@@ -68,6 +70,7 @@ namespace MonsterTradingCardsGame_3.Server
 
         public void ServerControl(TcpClient clientSocket, int threadNumber)
         {
+            Console.WriteLine("in thread cw test");
             //Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
 
             //string? requestType;
@@ -135,7 +138,7 @@ namespace MonsterTradingCardsGame_3.Server
                         {
                             token = parts[1].Trim();
                             headerInfos[1] = parts[1].Trim();
-                            //Console.WriteLine("__" + token + "__");
+                            Console.WriteLine("__" + token + "__");
                         }
                     }
                     lineNumber++;

@@ -19,7 +19,8 @@ namespace MonsterTradingCardsGame_3
         {
             Console.WriteLine("V3");
 
-
+            Console.WriteLine("konsolen ausgabe");
+            Console.WriteLine("test 2");
 
 
             /*string vergluname = "pat";
@@ -78,15 +79,19 @@ namespace MonsterTradingCardsGame_3
             listOfUsers.Add(user1);
             listOfUsers.Add(user2);
 
-            userList.PrintMultipleUsers(listOfUsers);
+            userList.PrintMultipleUsers(listOfUsers);*/
 
+            /*Users.User user1 = new Users.User(){ Username="Herbert", Password="abcde123"};
             CardGenerator generator = new CardGenerator();
-            generator.GeneratePackageLoop(user1);*/
+            generator.GeneratePackageLoop(user1);
             //user1.PrintCardStack();
+            Console.WriteLine("test 3");*/
 
             Server.Control server = new();
             //server.ServerControl(userList);
+            Console.WriteLine("test 4");
             server.ServerThreads();
+            Console.WriteLine("test 5");
             //Console.WriteLine("End Server loop");
 
 

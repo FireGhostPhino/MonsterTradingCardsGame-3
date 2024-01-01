@@ -1,4 +1,5 @@
-﻿using MonsterTradingCardsGame_3.Users;
+﻿using MonsterTradingCardsGame_3.Cards;
+using MonsterTradingCardsGame_3.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace MonsterTradingCardsGame_3.Server
         public List<User> allUserData = new();
         public List<string>? scoreboard = null;
         public List<Message> allMessages = new();
+        public List<Card> cards = new();
 
         public Users.User UserData
         {
@@ -56,6 +58,13 @@ namespace MonsterTradingCardsGame_3.Server
                 foreach (var message in allMessages)
                 {
                     writer.WriteLine("<p>" + message.ToString() + "</p>");
+                }
+            }
+            if(cards != null)
+            {
+                foreach (var card in cards)
+                {
+                    writer.WriteLine("<p>" + card.ToString() + "</p>");
                 }
             }
             writer.WriteLine("</body></html>");
