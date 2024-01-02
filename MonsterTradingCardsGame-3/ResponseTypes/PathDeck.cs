@@ -17,9 +17,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 {
     internal class PathDeck
     {
-        public PathDeck(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response)
+        public PathDeck(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response, string parameters)
         {
-            Console.WriteLine("Test PathDeck requestHandler");
+            //Console.WriteLine("Test PathDeck requestHandler");
             Console.WriteLine("in deck test");
             Console.WriteLine("in deck test 2");
 
@@ -27,7 +27,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if (requestType == Enums.RequestTypes.GET.ToString())
             {
-                GetRequest(pathSplitted, headerInfos, response, bodyInformation);
+                GetRequest(pathSplitted, headerInfos, response, bodyInformation, parameters);
             }
             else if (requestType == Enums.RequestTypes.PUT.ToString())
             {
@@ -39,37 +39,84 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
         }
 
-        private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
+        private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation, string parameters)
         {
-            Console.WriteLine("deck test in get pre");
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            if (parameters != "")
+            {
+                Console.WriteLine("Parameters: ");
+                Console.WriteLine(parameters);
+
+                var parameterInfo = parameters.Split('=');
+                Console.WriteLine(parameterInfo[0] + ", " + parameterInfo[1]);
+                if (parameterInfo[0] == "format" && parameterInfo[1] == "plain")
+                {
+                    response.plainOutput = true;
+                }
+            }
+
+
+            //Console.WriteLine("deck test in get pre");
+
+            List<int> usercardsids = new();
+
+            IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             string[] parts = headerInfos[1].Split(' ');
             string username = (parts[1].Split('-'))[0];
             Console.WriteLine(username);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-            command.CommandText = "SELECT cardcategorie,cardtype,elementtype,damage FROM userdeck WHERE username=@username ORDER BY id ASC;";
+            command.CommandText = "SELECT usercardsid FROM userdeck WHERE username=@username";
 
-            using IDataReader reader = command.ExecuteReader();
+            IDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
-                response.cards.Add(new Card()
-                {
-                    CardCategorie = (Enums.CardCategories) Enum.Parse(typeof(Enums.CardCategories), reader.GetString(0)),
-                    CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(1)),
-                    ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(2)),
-                    Damage = reader.GetInt32(3),
-                    /*CardCategorie = Enum.TryParse(reader.GetString(0), out CardCategorie),
-                    CardType = reader.GetString(1),
-                    ElementType = reader.GetString(2),
-                    Damage = reader.GetInt32(3),*/
-                });
-                Console.WriteLine($"<p>CardCategorie: {reader.GetString(0)}, CardType: {reader.GetString(1)}, ElementType: {reader.GetString(2)}, Damage: {reader.GetInt32(3)}</p>");
+                usercardsids.Add(reader.GetInt32(0));
             }
 
-            Console.WriteLine("deck test in get post");
+            command.Connection.Close();
+
+            Console.WriteLine(usercardsids.Count);
+            if (usercardsids.Count == 4)
+            {
+                //throw new InvalidDataException("11");
+
+
+
+
+                command = Database.DBConnection.ConnectionCreate();
+
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+                DBCreateParameter.AddParameterWithValue(command, "id1", DbType.Int32, usercardsids[0]);
+                DBCreateParameter.AddParameterWithValue(command, "id2", DbType.Int32, usercardsids[1]);
+                DBCreateParameter.AddParameterWithValue(command, "id3", DbType.Int32, usercardsids[2]);
+                DBCreateParameter.AddParameterWithValue(command, "id4", DbType.Int32, usercardsids[3]);
+                command.CommandText = "SELECT category,cardtype,elementtype,damage FROM usercards WHERE (id=@id1 OR id=@id2 OR id=@id3 OR id=@id4) AND username=@username";
+
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    response.cards.Add(new Card()
+                    {
+                        CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(0)),
+                        CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(1)),
+                        ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(2)),
+                        Damage = reader.GetInt32(3),
+                    });
+                    //Console.WriteLine($"<p>CardCategorie: {reader.GetString(0)}, CardType: {reader.GetString(1)}, ElementType: {reader.GetString(2)}, Damage: {reader.GetInt32(3)}</p>");
+                }
+
+            }
+
+            /*Console.WriteLine(response.cards.Count);
+            foreach (var card in response.cards)
+            {
+                Console.WriteLine("<p>" + card.ToString() + "</p>");
+            }*/
+
+            //Console.WriteLine("deck test in get post");
         }
 
         private void PutRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
@@ -164,7 +211,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 });
             }
 
-            //Console.WriteLine(cards.Count);
             if(cards.Count < 4)
             {
                 throw new InvalidDataException("14");
@@ -192,83 +238,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 command.CommandText = "DELETE FROM userdeck WHERE username=@username";
                 command.ExecuteNonQuery();
                 command.Connection.Close();
-
-                /*Console.WriteLine("update deck");
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
-                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
-                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
-                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
-                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
-                command.ExecuteNonQuery();
-                command.Connection.Close();*/
             }
-            /*else
-            {
-                Console.WriteLine("insert into deck");
-
-                try
-                {
-                    command = Database.DBConnection.ConnectionCreate();
-                    DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                    DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
-                    command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                    command.ExecuteNonQuery();
-                    command.Connection.Close();
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidDataException("16");
-                }
-
-                /*command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();*/
-            //}
 
             Console.WriteLine("insert into deck");
 

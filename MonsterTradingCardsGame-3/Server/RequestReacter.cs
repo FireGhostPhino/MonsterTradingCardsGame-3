@@ -19,7 +19,6 @@ namespace MonsterTradingCardsGame_3.Server
             string requestType;
             string requestPath;
             string[] pathSplitted;
-            string parameters;
 
             if(requestSplitted.Length > 1 ) 
             {
@@ -65,6 +64,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
 
             string[] parametersSplitted;
+            string parameters = "";
             if (requestPath.Length > 1 && isValidRequest)
             {
                 pathSplitted = requestPath.Split("/", StringSplitOptions.RemoveEmptyEntries);
@@ -88,7 +88,7 @@ namespace MonsterTradingCardsGame_3.Server
 
                 headerInfos[2] = requestType;
                 headerInfos[3] = requestPath;
-                RequestFunctionCaller requestFunctionCaller = new(pathSplitted, headerInfos, bodyInformation, response);
+                RequestFunctionCaller requestFunctionCaller = new(pathSplitted, headerInfos, bodyInformation, response, parameters);
             }
 
             //return 0;

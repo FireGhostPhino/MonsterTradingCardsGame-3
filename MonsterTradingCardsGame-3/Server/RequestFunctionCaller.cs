@@ -9,7 +9,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class RequestFunctionCaller
     {
-        public RequestFunctionCaller(string[] pathSplitted, string[] headerInfos, string bodyInformation, HTTP_Response response)
+        public RequestFunctionCaller(string[] pathSplitted, string[] headerInfos, string bodyInformation, HTTP_Response response, string parameters)
         {
             if (pathSplitted[0] == Enums.PathTypes.cards.ToString())
             {
@@ -17,7 +17,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if (pathSplitted[0] == Enums.PathTypes.deck.ToString())
             {
-                ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
+                ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation, response, parameters);
             }
             else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())
             {
