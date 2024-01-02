@@ -33,7 +33,6 @@ namespace MonsterTradingCardsGame_3.Server
             else
             {
                 throw new ProcessingException(1);
-                //return 1;
             }
 
             bool isValidRequest = false;
@@ -48,7 +47,6 @@ namespace MonsterTradingCardsGame_3.Server
             if (!isValidRequest) 
             {
                 throw new ProcessingException(2);
-                //return 2;
             }
 
             string[] bodyLines;
@@ -90,8 +88,6 @@ namespace MonsterTradingCardsGame_3.Server
                 headerInfos[3] = requestPath;
                 RequestFunctionCaller requestFunctionCaller = new(pathSplitted, headerInfos, bodyInformation, response, parameters);
             }
-
-            //return 0;
         }
     }
 }

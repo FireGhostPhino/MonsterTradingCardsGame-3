@@ -51,6 +51,10 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathChatroom requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
+            else if (pathSplitted[0] == Enums.PathTypes.chatroom.ToString())
+            {
+                ResponseTypes.PathBattles requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
+            }
             else
             {
                 throw new ProcessingException(3);

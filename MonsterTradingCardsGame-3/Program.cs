@@ -19,10 +19,6 @@ namespace MonsterTradingCardsGame_3
         {
             Console.WriteLine("V3");
 
-            Console.WriteLine("konsolen ausgabe");
-            Console.WriteLine("test 2");
-
-
             /*string vergluname = "pat";
             string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
             using IDbConnection connection = new NpgsqlConnection(connectionString);
@@ -93,12 +89,6 @@ namespace MonsterTradingCardsGame_3
             server.ServerThreads();
             Console.WriteLine("test 5");
             //Console.WriteLine("End Server loop");
-
-
-
-
-            /*Console.WriteLine("V3: Branch: Development");
-
 
 
             /*CardGenerator gen = new CardGenerator();

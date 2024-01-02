@@ -23,9 +23,7 @@ namespace MonsterTradingCardsGame_3.Server
 
         public void ServerThreads()
         {
-            Console.WriteLine("in control cw test.");
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
-            Console.WriteLine("in control cw test 2");
 
             var httpServer = new TcpListener(IPAddress.Loopback, 10001);
             httpServer.Start();
@@ -35,7 +33,6 @@ namespace MonsterTradingCardsGame_3.Server
 
             while (true)
             {
-                //Console.WriteLine("quit v: " + serverquit);
                 if (serverquit == (-2))
                 {
                     break;
@@ -43,7 +40,6 @@ namespace MonsterTradingCardsGame_3.Server
                 var clientSocket = httpServer.AcceptTcpClient();
                 threads.Add(new(() => ServerControl(clientSocket, i)));
                 threads[^1]?.Start();
-                //Console.WriteLine("quit d: " + serverquit);
                 if(threadquit != -1 && threads[threadquit] != null)
                 {
                     //Console.WriteLine("Thread " + threadquit + "joined");
@@ -57,28 +53,10 @@ namespace MonsterTradingCardsGame_3.Server
                 }
                 i++;
             }
-            /*Console.WriteLine("Server wird beendet!");
-            for(int j = 0; j < threads.Count; j++)
-            {
-                if (threads[j] != null)
-                {
-                    threads[j].Join();
-                }
-            }
-            Console.WriteLine("Alle Threads eingesammelt, Server beendet!");*/
         }
 
         public void ServerControl(TcpClient clientSocket, int threadNumber)
         {
-            Console.WriteLine("in thread cw test");
-            //Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
-
-            //string? requestType;
-            //string? path;
-
-            //var httpServer = new TcpListener(IPAddress.Loopback, 10001);
-            //httpServer.Start();
-
             while (true)
             {
                 //var clientSocket = httpServer.AcceptTcpClient();
@@ -95,7 +73,6 @@ namespace MonsterTradingCardsGame_3.Server
                 string? line;
                 string requestInformation;
                 bool isBody = false;
-                //int content_length = 0;
                 int lineNumber = 0;
                 requestInformation = string.Empty;
                 string token = "";
@@ -111,9 +88,6 @@ namespace MonsterTradingCardsGame_3.Server
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    //Console.WriteLine(lineNumber + ": ");
-                    //Console.WriteLine(line);
-
                     if(lineNumber == 0)
                     {
                         requestInformation = line;
@@ -131,7 +105,6 @@ namespace MonsterTradingCardsGame_3.Server
                         var parts = line.Split(':');
                         if (parts.Length == 2 && parts[0] == "Content-Length")
                         {
-                            //content_length = int.Parse(parts[1].Trim());
                             headerInfos[0] = parts[1].Trim();
                         }
                         else if(parts.Length == 2 && parts[0] == "Authorization")
@@ -149,10 +122,6 @@ namespace MonsterTradingCardsGame_3.Server
 
                 try
                 {
-                    /*if (headerInfos[1] == "")
-                    {
-                        throw new InvalidDataException("7");
-                    }*/
                     RequestReacter reactor = new();
                     HTTP_Response response = new();
 
