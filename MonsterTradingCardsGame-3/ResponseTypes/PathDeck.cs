@@ -152,7 +152,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             int allCardsOwned = 0;
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-            command.CommandText = "SELECT id, category, cardtype, elementtype, damage FROM usercards WHERE username=@username";
+            command.CommandText = "SELECT id FROM usercards WHERE username=@username";
 
             reader = command.ExecuteReader();
 
@@ -161,10 +161,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 cards.Add(new Card()
                 {
                     Id = reader.GetInt32(0),
-                    CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(1)),
-                    CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(2)),
-                    ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
-                    Damage = reader.GetInt32(4),
                 });
             }
 
@@ -189,16 +185,127 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if (existingDeck)
             {
+                Console.WriteLine("delete deck");
                 command = Database.DBConnection.ConnectionCreate();
 
                 DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
                 command.CommandText = "DELETE FROM userdeck WHERE username=@username";
                 command.ExecuteNonQuery();
                 command.Connection.Close();
+
+                /*Console.WriteLine("update deck");
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
+                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
+                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
+                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
+                command.CommandText = "UPDATE userdeck SET usercardsid=@usercardsid WHERE username=@username";
+                command.ExecuteNonQuery();
+                command.Connection.Close();*/
             }
+            /*else
+            {
+                Console.WriteLine("insert into deck");
 
-            //Weiter Machen!
+                try
+                {
+                    command = Database.DBConnection.ConnectionCreate();
+                    DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                    DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
+                    command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                    command.ExecuteNonQuery();
+                    command.Connection.Close();
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidDataException("16");
+                }
 
+                /*command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();*/
+            //}
+
+            Console.WriteLine("insert into deck");
+
+            try
+            {
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+
+                command = Database.DBConnection.ConnectionCreate();
+                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
+                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
+                command.ExecuteNonQuery();
+                command.Connection.Close();
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException("16");
+            }
         }
     }
 }
