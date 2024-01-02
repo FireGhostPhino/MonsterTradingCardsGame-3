@@ -19,10 +19,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
     {
         public PathDeck(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response, string parameters)
         {
-            //Console.WriteLine("Test PathDeck requestHandler");
-            Console.WriteLine("in deck test");
-            Console.WriteLine("in deck test 2");
-
             string requestType = headerInfos[2];
 
             if (requestType == Enums.RequestTypes.GET.ToString())
@@ -43,9 +39,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             if (parameters != "")
             {
-                Console.WriteLine("Parameters: ");
-                Console.WriteLine(parameters);
-
                 var parameterInfo = parameters.Split('=');
                 Console.WriteLine(parameterInfo[0] + ", " + parameterInfo[1]);
                 if (parameterInfo[0] == "format" && parameterInfo[1] == "plain")
@@ -54,16 +47,12 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
             }
 
-
-            //Console.WriteLine("deck test in get pre");
-
             List<int> usercardsids = new();
 
             IDbCommand command = Database.DBConnection.ConnectionCreate();
 
-            string[] parts = headerInfos[1].Split(' ');
-            string username = (parts[1].Split('-'))[0];
-            Console.WriteLine(username);
+            string[] tokenparts = headerInfos[1].Split(' ');
+            string username = (tokenparts[1].Split('-'))[0];
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT usercardsid FROM userdeck WHERE username=@username";
@@ -77,14 +66,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             command.Connection.Close();
 
-            Console.WriteLine(usercardsids.Count);
             if (usercardsids.Count == 4)
             {
-                //throw new InvalidDataException("11");
-
-
-
-
                 command = Database.DBConnection.ConnectionCreate();
 
                 DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
@@ -105,18 +88,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                         ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(2)),
                         Damage = reader.GetInt32(3),
                     });
-                    //Console.WriteLine($"<p>CardCategorie: {reader.GetString(0)}, CardType: {reader.GetString(1)}, ElementType: {reader.GetString(2)}, Damage: {reader.GetInt32(3)}</p>");
                 }
-
             }
-
-            /*Console.WriteLine(response.cards.Count);
-            foreach (var card in response.cards)
-            {
-                Console.WriteLine("<p>" + card.ToString() + "</p>");
-            }*/
-
-            //Console.WriteLine("deck test in get post");
         }
 
         private void PutRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
@@ -128,15 +101,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 body = body[1].Split(']');
                 body = body[0].Split(',');
                 List<string> ids = new();
-                foreach(var part in body)
+                foreach(var line in body)
                 {
-                    var id = part.Trim();
+                    var id = line.Trim();
                     ids.Add(id.Split('"')[1]);
                 }
-                /*foreach(var id in ids)
-                {
-                    Console.WriteLine(id);
-                }*/
 
                 deck.CardId1 = Int32.Parse(ids[0]);
                 deck.CardId2 = Int32.Parse(ids[1]);
@@ -148,17 +117,13 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     throw new InvalidDataException("11");
                 }
 
-                string[] parts = headerInfos[1].Split(' ');
-                deck.Username = (parts[1].Split('-'))[0];
+                string[] tokenparts = headerInfos[1].Split(' ');
+                deck.Username = (tokenparts[1].Split('-'))[0];
             }
             catch (Exception e)
             {
                 throw new InvalidDataException("11");
             }
-
-            /*Console.WriteLine("print ids: ");
-            Console.WriteLine(deck.ToString());
-            Console.WriteLine(deck.CardId1);*/
 
             if (deck.Username == "")
             {
@@ -231,7 +196,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if (existingDeck)
             {
-                Console.WriteLine("delete deck");
                 command = Database.DBConnection.ConnectionCreate();
 
                 DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
@@ -239,8 +203,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 command.ExecuteNonQuery();
                 command.Connection.Close();
             }
-
-            Console.WriteLine("insert into deck");
 
             try
             {
