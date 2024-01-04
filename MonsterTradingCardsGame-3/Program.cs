@@ -85,9 +85,9 @@ namespace MonsterTradingCardsGame_3
 
             Server.Control server = new();
             //server.ServerControl(userList);
-            Console.WriteLine("test 4");
+            //Console.WriteLine("test 4");
             server.ServerThreads();
-            Console.WriteLine("test 5");
+            //Console.WriteLine("test 5");
             //Console.WriteLine("End Server loop");
 
 

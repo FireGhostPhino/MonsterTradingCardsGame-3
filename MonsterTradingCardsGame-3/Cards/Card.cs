@@ -49,7 +49,7 @@ namespace MonsterTradingCardsGame_3.Cards
 
         public override string ToString()
         {
-            return $"CardCategorie: {CardCategorie}, CardType: {CardType}, ElementType: {ElementType}, Damage: {Damage}";
+            return $"Id: {Id}, CardCategorie: {CardCategorie}, CardType: {CardType}, ElementType: {ElementType}, Damage: {Damage}";
         }
     }
 }

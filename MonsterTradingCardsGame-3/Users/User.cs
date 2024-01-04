@@ -34,6 +34,8 @@ namespace MonsterTradingCardsGame_3.Users
         private string _newpassword = "";
         private int _coins;
         private int _elo;
+        private int _wins;
+        private int _loses;
         private string? _token = null;
         public List<Card>? cardStack = null;
         public List<Card>? cardDeck = null;
@@ -72,6 +74,18 @@ namespace MonsterTradingCardsGame_3.Users
         {
             get { return _elo; }
             set { _elo = value; }
+        }
+
+        public int Wins
+        {
+            get { return _wins; }
+            set { _wins = value; }
+        }
+
+        public int Loses
+        {
+            get { return _loses; }
+            set { _loses = value; }
         }
 
         public string Token
@@ -141,7 +155,16 @@ namespace MonsterTradingCardsGame_3.Users
 
         public override string ToString()
         {
-            return $"Id: {Id}, Username: {Username}, Password: {Password}, Coins: {Coins}, Elo: {Elo}";
+            int winloseR = 0;
+            if (Loses > 0)
+            {
+                winloseR = Wins / Loses;
+            }
+            else
+            {
+                winloseR = Wins;
+            }
+            return $"Id: {Id}, Username: {Username}, Password: {Password}, Coins: {Coins}, Elo: {Elo}, Wins: {Wins}, Loses {Loses}, Win/Lose ratio: {winloseR}";
         }
     }
 }

@@ -11,15 +11,15 @@ namespace MonsterTradingCardsGame_3.Server
     {
         public RequestFunctionCaller(string[] pathSplitted, string[] headerInfos, string bodyInformation, HTTP_Response response, string parameters)
         {
-            if (pathSplitted[0] == Enums.PathTypes.cards.ToString())
+            if (pathSplitted[0] == Enums.PathTypes.cards.ToString())            //ok
             {
-                ResponseTypes.PathCards requestHandler = new(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathCards requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.deck.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.deck.ToString())        //ok
             {
                 ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation, response, parameters);
             }
-            else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())
+            else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())     //ok
             {
                 ResponseTypes.PathPackages requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
@@ -29,7 +29,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if (pathSplitted[0] == Enums.PathTypes.sessions.ToString())
             {
-                ResponseTypes.PathSessions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathSessions requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else if (pathSplitted[0] == Enums.PathTypes.stats.ToString())       //ok
             {
@@ -41,7 +41,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if (pathSplitted[0] == Enums.PathTypes.transactions.ToString())
             {
-                ResponseTypes.PathTransactions requestHandler = new(headerInfos, pathSplitted, bodyInformation);
+                ResponseTypes.PathTransactions requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else if (pathSplitted[0] == Enums.PathTypes.users.ToString())       //ok
             {

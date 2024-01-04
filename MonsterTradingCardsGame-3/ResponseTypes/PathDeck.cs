@@ -75,7 +75,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 DBCreateParameter.AddParameterWithValue(command, "id2", DbType.Int32, usercardsids[1]);
                 DBCreateParameter.AddParameterWithValue(command, "id3", DbType.Int32, usercardsids[2]);
                 DBCreateParameter.AddParameterWithValue(command, "id4", DbType.Int32, usercardsids[3]);
-                command.CommandText = "SELECT category,cardtype,elementtype,damage FROM usercards WHERE (id=@id1 OR id=@id2 OR id=@id3 OR id=@id4) AND username=@username";
+                command.CommandText = "SELECT id, category,cardtype,elementtype,damage FROM usercards WHERE (id=@id1 OR id=@id2 OR id=@id3 OR id=@id4) AND username=@username";
 
                 reader = command.ExecuteReader();
 
@@ -83,10 +83,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 {
                     response.cards.Add(new Card()
                     {
-                        CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(0)),
-                        CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(1)),
-                        ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(2)),
-                        Damage = reader.GetInt32(3),
+                        Id = reader.GetInt32(0),
+                        CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(1)),
+                        CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(2)),
+                        ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
+                        Damage = reader.GetInt32(4),
                     });
                 }
             }

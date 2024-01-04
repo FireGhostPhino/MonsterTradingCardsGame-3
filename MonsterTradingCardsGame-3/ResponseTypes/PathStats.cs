@@ -4,6 +4,7 @@ using MonsterTradingCardsGame_3.Users;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,16 +42,27 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             Console.WriteLine(username);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-            command.CommandText = "SELECT username, elo FROM users WHERE username=@username";
+            command.CommandText = "SELECT username, elo, wins, loses FROM users WHERE username=@username";
             using IDataReader reader = command.ExecuteReader();
             if (!reader.Read())
             {
                 throw new InvalidDataException("4");
             }
 
+            int winloseR = 0;
+            int wins = reader.GetInt32(2);
+            int loses = reader.GetInt32(3);
+            if (loses > 0)
+            {
+                winloseR = wins / loses;
+            }
+            else
+            {
+                winloseR = wins;
+            }
             response.scoreboard = new List<string>
             {
-                reader.GetString(0) + ": " + reader.GetInt32(1)
+                reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR
             };
             Console.WriteLine(response.scoreboard);
         }

@@ -46,7 +46,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 throw new InvalidDataException("2");
             }
-
         }
 
         private void GetRequest(string[] pathSplitted, IDbCommand command, string[] headerInfos, HTTP_Response response)
@@ -69,6 +68,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                         Password = reader.GetString(2),
                         Elo = reader.GetInt32(3),
                         Coins = reader.GetInt32(4),
+                        Wins = reader.GetInt32(5),
+                        Loses = reader.GetInt32(6),
                     };
 
                     response.UserData = user;
@@ -95,7 +96,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                         Username = reader.GetString(1),
                         Password = reader.GetString(2),
                         Elo = reader.GetInt32(3),
-                        Coins = reader.GetInt32(4)
+                        Coins = reader.GetInt32(4),
+                        Wins = reader.GetInt32(5),
+                        Loses = reader.GetInt32(6),
                     });
                 }
             }

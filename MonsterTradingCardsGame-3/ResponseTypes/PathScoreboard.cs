@@ -35,13 +35,26 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
-            command.CommandText = "SELECT username,elo FROM users ORDER BY elo DESC";
+            command.CommandText = "SELECT username,elo, wins, loses FROM users ORDER BY elo DESC";
             using IDataReader reader = command.ExecuteReader();
             response.scoreboard = new List<string>();
 
+            int winloseR = 0;
+            int wins = 0;
+            int loses = 0;
             while (reader.Read())
             {
-                response.scoreboard.Add(reader.GetString(0) + ": " + reader.GetInt32(1));
+                wins = reader.GetInt32(2);
+                loses = reader.GetInt32(3);
+                if (loses > 0)
+                {
+                    winloseR = wins / loses;
+                }
+                else
+                {
+                    winloseR = wins;
+                }
+                response.scoreboard.Add(reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR);
             }
         }
     }

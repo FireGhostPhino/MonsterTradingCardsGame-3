@@ -18,6 +18,7 @@ namespace MonsterTradingCardsGame_3.Server
         public List<Message> allMessages = new();
         public List<Card> cards = new();
         public bool plainOutput = false;
+        public string returnMessage = "";
 
         public Users.User UserData
         {
@@ -32,6 +33,7 @@ namespace MonsterTradingCardsGame_3.Server
             writer.WriteLine("Content-Type: text/html; charset=utf-8");
             writer.WriteLine();
             writer.WriteLine("<html><body><h1>Request ok</h1><a>" + UserData + "</a></b>");
+            writer.WriteLine("<p>" + returnMessage + "</p>");
             if(allUserData != null)
             {
                 foreach(var user in allUserData)
@@ -42,7 +44,7 @@ namespace MonsterTradingCardsGame_3.Server
             if (scoreboard != null && scoreboard.Count > 1)
             {
                 int i = 0;
-                writer.WriteLine("Platz: Username: Elo");
+                writer.WriteLine("Platz: Username: Elo - Wins/Loses - win/lose ratio");
                 foreach (var line in scoreboard)
                 {
                     writer.WriteLine("<p>Platz " + (i+1) + ": " + line + "</p>");
@@ -51,7 +53,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
             else if(scoreboard != null && scoreboard.Count == 1)
             {
-                writer.WriteLine("Username: Elo");
+                writer.WriteLine("Username: Elo - Wins/Loses - win/lose ratio");
                 writer.WriteLine("<p>" + scoreboard[0] + "</p>");
             }
             if(allMessages != null)
