@@ -156,7 +156,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void PutRequest(string[] pathSplitted, string bodyInformation, string[] headerInfos)
         {
-            IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //IDbCommand command = Database.DBConnection.ConnectionCreate();
             User? user;
             string username;
             try
@@ -180,23 +180,30 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new InvalidDataException("22");
             }
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            command.CommandText = "SELECT password FROM users WHERE username=@username";
-            using IDataReader reader = command.ExecuteReader();
-            if (!reader.Read())
+            //DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
+            //command.CommandText = "SELECT password FROM users WHERE username=@username";
+            //using IDataReader reader = command.ExecuteReader();
+            /*if (!reader.Read())
             {
                 throw new InvalidDataException("4");
             }
-            string password = reader.GetString(0);
-            command.Connection.Close();
-            command = Database.DBConnection.ConnectionCreate();
+            string password = reader.GetString(0);*/
+
+            string password = Database.DBCommands.ReadTableUsers.GetPassword(user.Username);
+
+            //command.Connection.Close();
+
+
+            //command = Database.DBConnection.ConnectionCreate();
 
             if ((password == user.Password) && (headerInfos[1] == (StandardValues.tokenPre + user.Username + StandardValues.tokenPost)))
             {
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
+                Database.DBCommands.WriteTableUsers.UpdatePassword(user.Username, user.NewPassword);
+
+                /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
                 DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.NewPassword);
                 command.CommandText = "UPDATE users SET password=@password WHERE username=@username";
-                command.ExecuteNonQuery();
+                command.ExecuteNonQuery();*/
             }
             else
             {

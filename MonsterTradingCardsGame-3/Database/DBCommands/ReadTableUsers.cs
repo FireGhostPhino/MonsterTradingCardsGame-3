@@ -82,5 +82,24 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands
                 return false;
             }
         }
+
+        public static string GetPassword(string username)
+        {
+            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "SELECT password FROM users WHERE username=@username";
+
+            using IDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return reader.GetString(0);
+            }
+            else
+            {
+                throw new InvalidDataException("4");
+            }
+        }
     }
 }

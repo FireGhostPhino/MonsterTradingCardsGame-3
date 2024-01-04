@@ -26,5 +26,15 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands
 
             command.ExecuteNonQuery();
         }
+
+        public static void UpdatePassword(string username, string password)
+        {
+            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, password);
+            command.CommandText = "UPDATE users SET password=@password WHERE username=@username";
+            command.ExecuteNonQuery();
+        }
     }
 }
