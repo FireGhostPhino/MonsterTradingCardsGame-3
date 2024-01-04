@@ -25,10 +25,7 @@ namespace MonsterTradingCardsGame_3.Server
                 requestType = requestSplitted[0];
                 requestPath = requestSplitted[1];
 
-                Console.WriteLine("\n\nRequest: ");
-                Console.WriteLine("Length: " + requestSplitted.Length);
-                Console.WriteLine("Type: " + requestType);
-                Console.WriteLine("Path: " + requestPath);
+                Console.WriteLine("\nRequest Path: " + requestPath);
             }
             else
             {
@@ -49,18 +46,6 @@ namespace MonsterTradingCardsGame_3.Server
                 throw new ProcessingException(2);
             }
 
-            string[] bodyLines;
-            if (int.Parse(headerInfos[0]) > 0 )
-            {
-                bodyLines = bodyInformation.Split("\n");
-                Console.WriteLine("\nBody: ");
-                Console.WriteLine("Number of Lines: " + bodyLines.Length);
-                for(int i = 0; i < bodyLines.Length; i++)
-                {
-                    Console.WriteLine(bodyLines[i]);
-                }
-            }
-
             string[] parametersSplitted;
             string parameters = "";
             if (requestPath.Length > 1 && isValidRequest)
@@ -70,17 +55,10 @@ namespace MonsterTradingCardsGame_3.Server
                 pathSplitted[^1] = parametersSplitted[0];
                 if (pathSplitted[0] != "favicon.ico")
                 {
-                    Console.WriteLine("\nPath splitted:");
                     Console.WriteLine("Number of paths: " + pathSplitted.Length);
-                    for (int i = 0; i < pathSplitted.Length; i++)
-                    {
-                        Console.WriteLine(i + ": " + pathSplitted[i]);
-                    }
                     if(parametersSplitted.Length > 1)
                     {
                         parameters = parametersSplitted[1];
-                        Console.WriteLine("Parameters: ");
-                        Console.WriteLine(parameters);
                     }
                 }
 

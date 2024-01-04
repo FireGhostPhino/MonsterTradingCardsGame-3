@@ -36,7 +36,6 @@ namespace MonsterTradingCardsGame_3.Server
                     }
                     data.Append(chars, 0, bytesRead);
                 }
-                //Console.WriteLine(data.ToString());
                 return data.ToString();
             }
             return 0.ToString();
@@ -44,11 +43,7 @@ namespace MonsterTradingCardsGame_3.Server
 
         public string CommandListener(string command)
         {
-            if (command == "quit")
-            {
-                return (-1).ToString();
-            }
-            else if(command == "server:quit")
+            if(command == "server:quit")
             {
                 return (-2).ToString();
             }

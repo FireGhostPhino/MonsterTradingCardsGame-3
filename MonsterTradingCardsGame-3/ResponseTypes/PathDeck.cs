@@ -40,7 +40,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             if (parameters != "")
             {
                 var parameterInfo = parameters.Split('=');
-                Console.WriteLine(parameterInfo[0] + ", " + parameterInfo[1]);
                 if (parameterInfo[0] == "format" && parameterInfo[1] == "plain")
                 {
                     response.plainOutput = true;
@@ -141,8 +140,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 throw new InvalidDataException("13");
             }
-
-            Console.WriteLine(deck.CardId1 + ", " + deck.CardId2 + ", " + deck.CardId3 + ", " + deck.CardId4);
 
             IDbCommand command = Database.DBConnection.ConnectionCreate();
 

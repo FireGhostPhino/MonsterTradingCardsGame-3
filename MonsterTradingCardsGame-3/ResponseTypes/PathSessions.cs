@@ -16,8 +16,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
     {
         public PathSessions(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response)
         {
-            Console.WriteLine("Test PathSessions requestHandler");
-
             string requestType = headerInfos[2];
 
             if (requestType == Enums.RequestTypes.POST.ToString())
@@ -55,17 +53,12 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             IDataReader reader = command.ExecuteReader();
 
-            Console.WriteLine(user.Username);
             if (reader.Read())
             {
-                Console.WriteLine(reader.GetInt32(0));
-                Console.WriteLine("Username vorhanden");
-
                 response.returnMessage = StandardValues.tokenPre + user.Username + StandardValues.tokenPost;
             }
             else
             {
-                Console.WriteLine("Username nicht vorhanden");
                 throw new ArgumentException("21");
             }
 

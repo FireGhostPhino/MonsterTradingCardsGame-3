@@ -13,8 +13,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
     {
         public PathScoreboard(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response)
         {
-            Console.WriteLine("Test PathScoreboard requestHandler");
-
             if (headerInfos[1] == "")
             {
                 throw new InvalidDataException("2");

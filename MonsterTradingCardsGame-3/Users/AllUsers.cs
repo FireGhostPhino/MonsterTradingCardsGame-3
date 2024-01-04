@@ -88,7 +88,7 @@ namespace MonsterTradingCardsGame_3.Users
             return false;
         }
 
-        public void PrintAllUsers()
+        /*public void PrintAllUsers()
         {
             if (UserListNull() == false)
             {
@@ -104,9 +104,9 @@ namespace MonsterTradingCardsGame_3.Users
                 Console.WriteLine(userList[i].Coins);
                 Console.WriteLine(userList[i].Elo);
             }
-        }
+        }*/
 
-        public void PrintMultipleUsers(List<User> listOfUsers)
+        /*public void PrintMultipleUsers(List<User> listOfUsers)
         {
             Console.WriteLine(listOfUsers.Count);
             for (int i = 0; i < listOfUsers.Count; i++)
@@ -117,6 +117,6 @@ namespace MonsterTradingCardsGame_3.Users
                 Console.WriteLine(listOfUsers[i].Coins);
                 Console.WriteLine(listOfUsers[i].Elo);
             }
-        }
+        }*/
     }
 }

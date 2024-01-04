@@ -82,7 +82,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             else if((headerInfos[1] == (StandardValues.tokenPre + "admin" + StandardValues.tokenPost)) ||
                     (headerInfos[1] == (StandardValues.tokenPre + "ADMIN" + StandardValues.tokenPost)))
             {
-                Console.WriteLine("2");
+                Console.WriteLine("Admin Data request");
 
                 Database.DBCommands.DBPathUsers.CommandAllUserData(command);
 
@@ -111,7 +111,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
 
-                if (user == null)
+                if (user == null || user.Username == "" || user.Password == "")
                 {
                     throw new InvalidDataException("11");
                 }
@@ -125,16 +125,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             
             using IDataReader reader = command.ExecuteReader();
 
-            Console.WriteLine(user.Username);
             if (reader.Read())
             {
-                Console.WriteLine(reader.GetString(0));
-                Console.WriteLine("Username vorhanden");
                 throw new ArgumentException("4");
-            }
-            else
-            {
-                Console.WriteLine("neuer Username");
             }
 
             command.Connection.Close();
@@ -147,9 +140,21 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void PutRequest(string[] pathSplitted, string bodyInformation, IDbCommand command, string[] headerInfos)
         {
-            var user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
-            Console.WriteLine(pathSplitted[1]);
-            user.Username = pathSplitted[1];
+            User? user;
+            try
+            {
+                user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
+                user.Username = pathSplitted[1];
+
+                if (user == null || user.Username == "" || user.Password == "" || user.NewPassword == "")
+                {
+                    throw new InvalidDataException("11");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException("11");
+            }
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
             command.CommandText = "SELECT password FROM users WHERE username=@username";
@@ -161,8 +166,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             string password = reader.GetString(0);
             command.Connection.Close();
             command = Database.DBConnection.ConnectionCreate();
-
-            //Console.WriteLine("token got: " + headerInfos[1] + ", own: " + (StandardValues.tokenPre + user.Username + StandardValues.tokenPost));
 
             if ((password == user.Password) && (headerInfos[1] == (StandardValues.tokenPre + user.Username + StandardValues.tokenPost)))
             {

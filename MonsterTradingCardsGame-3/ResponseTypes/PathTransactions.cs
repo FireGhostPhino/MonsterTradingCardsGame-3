@@ -72,12 +72,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     List<Card> package = new();
                     package = generator.GeneratePackage(package);
 
-                    int i = 1;
                     foreach (var card in package)
                     {
-                        Console.WriteLine(i);
-                        i++;
-
                         command = Database.DBConnection.ConnectionCreate();
 
                         DBCreateParameter.AddParameterWithValue(command, "category", DbType.String, card.CardCategorie.ToString());

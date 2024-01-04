@@ -15,8 +15,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
     {
         public PathStats(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response)
         {
-            Console.WriteLine("Test PathStats requestHandler");
-
             if (headerInfos[1] == "")
             {
                 throw new InvalidDataException("2");
@@ -39,7 +37,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             string[] parts = headerInfos[1].Split(' ');
             string username = (parts[1].Split('-'))[0];
-            Console.WriteLine(username);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT username, elo, wins, loses FROM users WHERE username=@username";
@@ -64,7 +61,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR
             };
-            Console.WriteLine(response.scoreboard);
         }
     }
 }

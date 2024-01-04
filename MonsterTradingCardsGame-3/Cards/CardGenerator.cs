@@ -16,7 +16,7 @@ namespace MonsterTradingCardsGame_3.Cards
             return random.Next(minimum, maximum);
         }
 
-        public void GeneratePackageLoop(User user)
+        /*public void GeneratePackageLoop(User user)
         {
             while (user.Coins >= StandardValues.packageCost)
             {
@@ -42,7 +42,7 @@ namespace MonsterTradingCardsGame_3.Cards
                     user.PayPackage();
                 }
             }
-        }
+        }*/
 
         public List<Card> GeneratePackage(List<Card> package)
         {
@@ -94,7 +94,7 @@ namespace MonsterTradingCardsGame_3.Cards
             return card;
         }
 
-        public void PrintPackage(List<Card> package)
+        /*public void PrintPackage(List<Card> package)
         {
             for (int i = 0; i < package.Count; i++)
             {
@@ -104,6 +104,6 @@ namespace MonsterTradingCardsGame_3.Cards
                 Console.WriteLine(package[i].ElementType);
                 Console.WriteLine(package[i].Damage);
             }
-        }
+        }*/
     }
 }

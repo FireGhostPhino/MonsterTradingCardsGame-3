@@ -19,15 +19,11 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathDeck requestHandler = new(headerInfos, pathSplitted, bodyInformation, response, parameters);
             }
-            else if(pathSplitted[0] == Enums.PathTypes.packages.ToString())     //ok
-            {
-                ResponseTypes.PathPackages requestHandler = new(headerInfos, pathSplitted, bodyInformation);
-            }
-            else if (pathSplitted[0] == Enums.PathTypes.scoreboard.ToString())      //ok
+            else if (pathSplitted[0] == Enums.PathTypes.scoreboard.ToString())  //ok
             {
                 ResponseTypes.PathScoreboard requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.sessions.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.sessions.ToString())    //ok
             {
                 ResponseTypes.PathSessions requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
@@ -39,7 +35,7 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathTradings requestHandler = new(headerInfos, pathSplitted, bodyInformation);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.transactions.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.transactions.ToString()) //ok
             {
                 ResponseTypes.PathTransactions requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
@@ -58,7 +54,6 @@ namespace MonsterTradingCardsGame_3.Server
             else
             {
                 throw new ProcessingException(3);
-                        //return 3;
             }
         }
     }

@@ -42,7 +42,6 @@ namespace MonsterTradingCardsGame_3.Server
                 threads[^1]?.Start();
                 if(threadquit != -1 && threads[threadquit] != null)
                 {
-                    //Console.WriteLine("Thread " + threadquit + "joined");
                     threads[threadquit]?.Join();
                     threads[threadquit] = null;
                     threadquit = -1;
@@ -59,8 +58,6 @@ namespace MonsterTradingCardsGame_3.Server
         {
             while (true)
             {
-                //var clientSocket = httpServer.AcceptTcpClient();
-                //Console.WriteLine("cs v: " + clientSocket.Connected);
                 if(clientSocket.Connected ==  false)
                 {
                     threadquit = threadNumber;
@@ -111,7 +108,6 @@ namespace MonsterTradingCardsGame_3.Server
                         {
                             token = parts[1].Trim();
                             headerInfos[1] = parts[1].Trim();
-                            Console.WriteLine("__" + token + "__");
                         }
                     }
                     lineNumber++;

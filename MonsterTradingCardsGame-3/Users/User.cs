@@ -100,6 +100,8 @@ namespace MonsterTradingCardsGame_3.Users
             Password = password;
             Coins = StandardValues.startCoins;
             Elo = StandardValues.startElo;
+            Wins = StandardValues.startWinsLoses;
+            Loses = StandardValues.startWinsLoses;
             cardStack = new List<Card>();
             cardDeck = new List<Card>();
         }
@@ -108,6 +110,8 @@ namespace MonsterTradingCardsGame_3.Users
         {
             Coins = StandardValues.startCoins;
             Elo = StandardValues.startElo;
+            Wins = StandardValues.startWinsLoses;
+            Loses = StandardValues.startWinsLoses;
             cardStack = new List<Card>();
             cardDeck = new List<Card>();
         }
@@ -126,21 +130,21 @@ namespace MonsterTradingCardsGame_3.Users
             }
         }*/
 
-        public void PayPackage()
+        /*public void PayPackage()
         {
             Coins -= StandardValues.packageCost;
-        }
+        }*/
 
-        public void PrintUser()
+        /*public void PrintUser()
         {
             Console.WriteLine("\nUser:");
             Console.WriteLine(Username);
             Console.WriteLine(Password);
             Console.WriteLine(Coins);
             Console.WriteLine(Elo);
-        }
+        }*/
 
-        public void PrintCardStack()
+        /*public void PrintCardStack()
         {
             Console.WriteLine("\nAnzahl Karten im Stack: " + cardStack.Count);
             for (int i = 0; i < cardStack.Count; i++)
@@ -151,7 +155,7 @@ namespace MonsterTradingCardsGame_3.Users
                 Console.WriteLine(cardStack[i].ElementType);
                 Console.WriteLine(cardStack[i].Damage);
             }
-        }
+        }*/
 
         public override string ToString()
         {

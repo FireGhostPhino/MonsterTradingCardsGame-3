@@ -26,7 +26,6 @@ namespace MonsterTradingCardsGame_3.Server
             set { _userData = value; }
         }
 
-
         public void CreateOKResponse(StreamWriter writer)
         {
             writer.WriteLine("HTTP/1.1 200 OK");
@@ -88,7 +87,6 @@ namespace MonsterTradingCardsGame_3.Server
             }
             writer.WriteLine("</body></html>");
         }
-
 
         public void CreateERRORResponse(StreamWriter writer, string errorCode)
         {
