@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTradingCardsGame_3.Database.DBCommands
+namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 {
     internal class WriteTableUsers
     {
         public static void InsertUser(User? user)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionCreate();
 
             command.CommandText = "INSERT INTO users (username, password, elo, coins, wins, loses) " +
             "VALUES (@username, @password, @elo, @coins, @wins, @loses)";
@@ -29,11 +29,23 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands
 
         public static void UpdatePassword(string username, string password)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionCreate();
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, password);
             command.CommandText = "UPDATE users SET password=@password WHERE username=@username";
+
+            command.ExecuteNonQuery();
+        }
+
+        public static void UpdateCoins(int usercoins, string username)
+        {
+            using IDbCommand command = DBConnection.ConnectionCreate();
+
+            DBCreateParameter.AddParameterWithValue(command, "coins", DbType.Int32, usercoins);
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "UPDATE users SET coins=@coins WHERE username=@username";
+
             command.ExecuteNonQuery();
         }
     }

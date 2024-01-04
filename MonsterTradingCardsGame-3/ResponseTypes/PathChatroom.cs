@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableMessages;
 using MonsterTradingCardsGame_3.Enums;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
@@ -41,7 +42,9 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            ReadTableMessages.GetAllMessages(response);
+
+            /*using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             command.CommandText = "SELECT * FROM messages ORDER BY id ASC";
 
@@ -56,7 +59,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     MessageText = reader.GetString(2),
                     MessageTime = reader.GetDateTime(3)
                 });
-            }
+            }*/
         }
 
         private void PostRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
@@ -77,17 +80,19 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11");
+                throw new InvalidDataException("11 (Data reading error)");
             }
 
             if (message.Username == "" || message.MessageText == "")
             {
-                throw new InvalidDataException("10");
+                throw new InvalidDataException("10 (missing Data)");
             }
 
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
             DateTime dateTime = GeneralHelpFunctions.CurrentTime.CurrentDateTime();
+
+            WriteTableMessages.SaveMessage(message, dateTime);
+
+            /*using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             command.CommandText = "INSERT INTO messages (username, message, messagetime) " +
             "VALUES (@username, @message, @messagetime)";
@@ -95,7 +100,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             DBCreateParameter.AddParameterWithValue(command, "message", DbType.String, message.MessageText);
             DBCreateParameter.AddParameterWithValue(command, "messagetime", DbType.DateTime2, dateTime);
 
-            command.ExecuteNonQuery();
+            command.ExecuteNonQuery();*/
         }
     }
 }

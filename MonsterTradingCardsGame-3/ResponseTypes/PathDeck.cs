@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using MonsterTradingCardsGame_3.Cards;
 using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck;
 using MonsterTradingCardsGame_3.Enums;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
@@ -53,12 +55,15 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             List<int> usercardsids = new();
 
-            IDbCommand command = Database.DBConnection.ConnectionCreate();
+
+            //IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             string[] tokenparts = headerInfos[1].Split(' ');
             string username = (tokenparts[1].Split('-'))[0];
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            usercardsids = ReadTableUserdeck.GetUserdeck(username);
+
+            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT usercardsid FROM userdeck WHERE username=@username";
 
             IDataReader reader = command.ExecuteReader();
@@ -66,15 +71,17 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             while (reader.Read())
             {
                 usercardsids.Add(reader.GetInt32(0));
-            }
+            }*/
 
-            command.Connection.Close();
+            //command.Connection.Close();
 
             if (usercardsids.Count == 4)
             {
-                command = Database.DBConnection.ConnectionCreate();
+                //command = Database.DBConnection.ConnectionCreate();
 
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+                ReadTableUsercards.GetUserdeckValues(response, username, usercardsids);
+
+                /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
                 DBCreateParameter.AddParameterWithValue(command, "id1", DbType.Int32, usercardsids[0]);
                 DBCreateParameter.AddParameterWithValue(command, "id2", DbType.Int32, usercardsids[1]);
                 DBCreateParameter.AddParameterWithValue(command, "id3", DbType.Int32, usercardsids[2]);
@@ -93,7 +100,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                         ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
                         Damage = reader.GetInt32(4),
                     });
-                }
+                }*/
             }
         }
 
@@ -127,49 +134,56 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11");
+                throw new InvalidDataException("11 (Body reading error)");
             }
 
             if (deck.Username == "")
             {
-                throw new InvalidDataException("10");
+                throw new InvalidDataException("10 (Error at Token)");
             }
 
             if(deck.CardId1 == -1 || deck.CardId2 == -1 || deck.CardId3 == -1 || deck.CardId4 == -1)
             {
-                throw new InvalidDataException("12");
+                throw new InvalidDataException("12 (too few cards given)");
             }
 
             if(deck.CardId1 == deck.CardId2 || deck.CardId2 == deck.CardId3 || deck.CardId3 == deck.CardId4 || 
                deck.CardId1 == deck.CardId3 || deck.CardId1 == deck.CardId4 || deck.CardId2 == deck.CardId4)
             {
-                throw new InvalidDataException("13");
+                throw new InvalidDataException("13 (every card is only once allowed in the deck)");
             }
 
-            IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //IDbCommand command = Database.DBConnection.ConnectionCreate();
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-            command.CommandText = "SELECT username FROM userdeck WHERE username=@username";
+            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+            command.CommandText = "SELECT username FROM userdeck WHERE username=@username";*/
 
-            IDataReader reader = command.ExecuteReader();
+            //IDataReader reader = command.ExecuteReader();
 
             bool existingDeck = false;
-            if (reader.Read())
+            /*if (reader.Read())
+            {
+                existingDeck = true;
+            }*/
+
+            if(ReadTableUserdeck.UserdeckExist(deck.Username) == true)
             {
                 existingDeck = true;
             }
 
-            command.Connection.Close();
+            //command.Connection.Close();
 
 
-            command = Database.DBConnection.ConnectionCreate();
+            //command = Database.DBConnection.ConnectionCreate();
             List<Card> cards = new();
             int allCardsOwned = 0;
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-            command.CommandText = "SELECT id FROM usercards WHERE username=@username";
+            cards = ReadTableUsercards.GetUserOwnedCardIds(deck.Username);
 
-            reader = command.ExecuteReader();
+            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
+            command.CommandText = "SELECT id FROM usercards WHERE username=@username";*/
+
+            /*reader = command.ExecuteReader();
 
             while (reader.Read())
             {
@@ -177,11 +191,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 {
                     Id = reader.GetInt32(0),
                 });
-            }
+            }*/
 
             if(cards.Count < 4)
             {
-                throw new InvalidDataException("14");
+                throw new InvalidDataException("14 (too few cards owned)");
             }
 
             foreach (var card in cards)
@@ -194,22 +208,29 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if(allCardsOwned != 4)
             {
-                throw new InvalidDataException("15");
+                throw new InvalidDataException("15 (not all for deck selected cards owned)");
             }
 
             if (existingDeck)
             {
-                command = Database.DBConnection.ConnectionCreate();
+                WriteTableUserdeck.DeleteUserDeck(deck.Username);
+
+                /*command = Database.DBConnection.ConnectionCreate();
 
                 DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
                 command.CommandText = "DELETE FROM userdeck WHERE username=@username";
                 command.ExecuteNonQuery();
-                command.Connection.Close();
+                command.Connection.Close();*/
             }
 
             try
             {
-                command = Database.DBConnection.ConnectionCreate();
+                WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId1);
+                WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId2);
+                WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId3);
+                WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId4);
+
+                /*command = Database.DBConnection.ConnectionCreate();
                 DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
                 DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
                 command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
@@ -235,11 +256,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
                 command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
                 command.ExecuteNonQuery();
-                command.Connection.Close();
+                command.Connection.Close();*/
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("16");
+                throw new InvalidDataException("16 (userdeck cards adding DB error)");
             }
         }
     }

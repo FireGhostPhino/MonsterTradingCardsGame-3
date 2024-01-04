@@ -88,12 +88,12 @@ namespace MonsterTradingCardsGame_3.Server
             writer.WriteLine("</body></html>");
         }
 
-        public void CreateERRORResponse(StreamWriter writer, string errorCode)
+        public void CreateERRORResponse(StreamWriter writer, string errorMessage)
         {
             writer.WriteLine("HTTP/1.1 400 Bad Request");
             writer.WriteLine(AnswerSettingsContenttype());
             writer.WriteLine();
-            writer.WriteLine("<html><body><h1>Error in request occured!</h1><a>Error: " + errorCode + "</a></body></html>");
+            writer.WriteLine("<html><body><h1>Error in request occured!</h1><a>Error: " + errorMessage + "</a></body></html>");
         }
 
         public string AnswerSettingsContenttype()

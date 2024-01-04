@@ -1,5 +1,6 @@
 ﻿using MonsterTradingCardsGame_3.Cards;
 using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
 using System;
@@ -24,7 +25,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("3");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
@@ -39,13 +40,14 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("17");
+                throw new InvalidDataException("17 (Error at Token)");
             }
 
-            IDbCommand command = Database.DBConnection.ConnectionCreate();
+            ReadTableUsercards.GetUserOwnedCards(response, username);
+
+            /*IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-
             command.CommandText = "SELECT id, category,cardtype,elementtype,damage FROM usercards WHERE username=@username";
 
             IDataReader reader = command.ExecuteReader();
@@ -60,7 +62,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
                     Damage = reader.GetInt32(4),
                 });
-            }
+            }*/
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUsers;
 using MonsterTradingCardsGame_3.Enums;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
@@ -45,9 +46,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new InvalidDataException("11");
             }
 
-            IDbCommand command = Database.DBConnection.ConnectionCreate();
+            ReadTableUsers.UsernamePasswordCheck(response, user.Username, user.Password);
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
+            //IDbCommand command = Database.DBConnection.ConnectionCreate();
+
+            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
             DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.Password);
             command.CommandText = "SELECT id FROM users WHERE username=@username AND password=@password";
 
@@ -62,7 +65,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new ArgumentException("21");
             }
 
-            command.Connection.Close();
+            command.Connection.Close();*/
         }
     }
 }

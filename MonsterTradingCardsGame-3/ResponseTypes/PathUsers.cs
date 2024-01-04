@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUsers;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
 using Npgsql;
@@ -57,7 +58,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 string username = pathSplitted[1];
 
-                Database.DBCommands.ReadTableUsers.GetSingleUserData(response, username);
+                ReadTableUsers.GetSingleUserData(response, username);
 
                 /*Database.DBCommands.DBPathUsers.CommandSingleUserData(command, username);
 
@@ -88,7 +89,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             {
                 Console.WriteLine("Admin Data request");
 
-                Database.DBCommands.ReadTableUsers.GetAllUserData(response);
+                ReadTableUsers.GetAllUserData(response);
 
                 /*Database.DBCommands.DBPathUsers.CommandAllUserData(command);
 
@@ -137,7 +138,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new ArgumentException("4");
             }*/
 
-            if(Database.DBCommands.ReadTableUsers.UsernameExist(user.Username) == true)
+            if(ReadTableUsers.UsernameExist(user.Username) == true)
             {
                 throw new ArgumentException("4");
             }
@@ -145,7 +146,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             //command.Connection.Close();
 
-            Database.DBCommands.WriteTableUsers.InsertUser(user);
+            WriteTableUsers.InsertUser(user);
 
             /*command = Database.DBConnection.ConnectionCreate();
 
@@ -189,7 +190,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             string password = reader.GetString(0);*/
 
-            string password = Database.DBCommands.ReadTableUsers.GetPassword(user.Username);
+            string password = ReadTableUsers.GetPassword(user.Username);
 
             //command.Connection.Close();
 
@@ -198,7 +199,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if ((password == user.Password) && (headerInfos[1] == (StandardValues.tokenPre + user.Username + StandardValues.tokenPost)))
             {
-                Database.DBCommands.WriteTableUsers.UpdatePassword(user.Username, user.NewPassword);
+                WriteTableUsers.UpdatePassword(user.Username, user.NewPassword);
 
                 /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
                 DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.NewPassword);

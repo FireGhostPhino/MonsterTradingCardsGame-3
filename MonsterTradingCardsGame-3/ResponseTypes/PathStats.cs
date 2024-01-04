@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableUsers;
 using MonsterTradingCardsGame_3.GeneralHelpFunctions;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
@@ -34,27 +35,29 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         private void GetRequest(string[] headerInfos, HTTP_Response response)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             string[] parts = headerInfos[1].Split(' ');
             string username = (parts[1].Split('-'))[0];
 
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            ReadTableUsers.GetUserStats(response, username);
+
+            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT username, elo, wins, loses FROM users WHERE username=@username";
             using IDataReader reader = command.ExecuteReader();
             if (!reader.Read())
             {
                 throw new InvalidDataException("4");
-            }
+            }*/
 
-            int winloseR = 0;
+            /*int winloseR = 0;
             int wins = reader.GetInt32(2);
             int loses = reader.GetInt32(3);
             winloseR = WinLoseRatio.WinLoseRatioCalc(wins, loses);
             response.scoreboard = new List<string>
             {
                 reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR
-            };
+            };*/
         }
     }
 }
