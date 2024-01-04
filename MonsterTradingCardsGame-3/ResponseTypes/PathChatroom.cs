@@ -62,11 +62,15 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         private void PostRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
         {
             Message? message;
+            string[] tokenparts;
             try
             {
                 message = JsonSerializer.Deserialize<Message>(bodyInformation ?? "");
 
-                if(message == null)
+                tokenparts = headerInfos[1].Split(' ');
+                message.Username = (tokenparts[1].Split('-'))[0];
+
+                if (message == null)
                 {
                     throw new InvalidDataException("11");
                 }

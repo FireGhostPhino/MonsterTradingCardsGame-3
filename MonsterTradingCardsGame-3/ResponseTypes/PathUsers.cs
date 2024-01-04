@@ -141,9 +141,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         private void PutRequest(string[] pathSplitted, string bodyInformation, IDbCommand command, string[] headerInfos)
         {
             User? user;
+            string username;
             try
             {
                 user = JsonSerializer.Deserialize<User>(bodyInformation ?? "");
+                username = user.Username;
                 user.Username = pathSplitted[1];
 
                 if (user == null || user.Username == "" || user.Password == "" || user.NewPassword == "")
@@ -154,6 +156,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             catch (Exception e)
             {
                 throw new InvalidDataException("11");
+            }
+
+            if (username != user.Username)
+            {
+                throw new InvalidDataException("22");
             }
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);

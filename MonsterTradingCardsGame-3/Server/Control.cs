@@ -107,6 +107,7 @@ namespace MonsterTradingCardsGame_3.Server
                         else if(parts.Length == 2 && parts[0] == "Authorization")
                         {
                             token = parts[1].Trim();
+                            Console.WriteLine(token);
                             headerInfos[1] = parts[1].Trim();
                         }
                     }
