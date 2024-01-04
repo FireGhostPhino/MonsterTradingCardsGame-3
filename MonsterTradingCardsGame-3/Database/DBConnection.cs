@@ -10,7 +10,21 @@ namespace MonsterTradingCardsGame_3.Database
 {
     internal class DBConnection
     {
-        public static IDbCommand ConnectionCreate()
+        public static IDbConnection ConnectionCreate()
+        {
+            string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
+            IDbConnection connection = new NpgsqlConnection(connectionString);
+            return connection;
+        }
+
+        public static IDbCommand ConnectionOpen(IDbConnection connection)
+        {
+            IDbCommand command = connection.CreateCommand();
+            connection.Open();
+            return command;
+        }
+
+        public static IDbCommand ConnectionCreateOrigial()
         {
             string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
             IDbConnection connection = new NpgsqlConnection(connectionString);

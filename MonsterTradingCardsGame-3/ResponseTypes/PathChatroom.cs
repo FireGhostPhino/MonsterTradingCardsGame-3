@@ -23,7 +23,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 (headerInfos[1] == "" || ((pathSplitted.Length > 1) &&
                 (headerInfos[1] != (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost)))))
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("2 (Token Error)");
             }
 
             if (requestType == Enums.RequestTypes.GET.ToString())
@@ -36,30 +36,13 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
         private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
         {
             ReadTableMessages.GetAllMessages(response);
-
-            /*using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            command.CommandText = "SELECT * FROM messages ORDER BY id ASC";
-
-            using IDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                response.allMessages.Add(new Message()
-                {
-                    Id = reader.GetInt32(0),
-                    Username = reader.GetString(1),
-                    MessageText = reader.GetString(2),
-                    MessageTime = reader.GetDateTime(3)
-                });
-            }*/
         }
 
         private void PostRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
@@ -91,16 +74,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             DateTime dateTime = GeneralHelpFunctions.CurrentTime.CurrentDateTime();
 
             WriteTableMessages.SaveMessage(message, dateTime);
-
-            /*using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            command.CommandText = "INSERT INTO messages (username, message, messagetime) " +
-            "VALUES (@username, @message, @messagetime)";
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, message.Username);
-            DBCreateParameter.AddParameterWithValue(command, "message", DbType.String, message.MessageText);
-            DBCreateParameter.AddParameterWithValue(command, "messagetime", DbType.DateTime2, dateTime);
-
-            command.ExecuteNonQuery();*/
         }
     }
 }

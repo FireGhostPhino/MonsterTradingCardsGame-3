@@ -10,7 +10,7 @@ namespace MonsterTradingCardsGame_3.GeneralHelpFunctions
     {
         public static int WinLoseRatioCalc(int wins, int loses)
         {
-            int winloseR = 0;
+            int winloseR;
             if (loses > 0)
             {
                 winloseR = wins / loses;

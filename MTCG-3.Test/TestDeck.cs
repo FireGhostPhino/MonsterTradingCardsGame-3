@@ -37,7 +37,8 @@ namespace MTCG_3.Test
             string username = "test";
 
             //Act
-            Deck deck = new Deck() { 
+            Deck deck = new()
+            {
                 CardId1 = id,
                 Username = username,
             };

@@ -25,7 +25,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
@@ -43,29 +43,10 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11");
+                throw new InvalidDataException("11 (Body reading error)");
             }
 
             ReadTableUsers.UsernamePasswordCheck(response, user.Username, user.Password);
-
-            //IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.Password);
-            command.CommandText = "SELECT id FROM users WHERE username=@username AND password=@password";
-
-            IDataReader reader = command.ExecuteReader();
-
-            if (reader.Read())
-            {
-                response.returnMessage = StandardValues.tokenPre + user.Username + StandardValues.tokenPost;
-            }
-            else
-            {
-                throw new ArgumentException("21");
-            }
-
-            command.Connection.Close();*/
         }
     }
 }

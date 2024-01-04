@@ -27,7 +27,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3  (invalid request type)");
             }
         }
 
@@ -36,7 +36,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             if(pathSplitted.Length >= 2 && pathSplitted[1] == Enums.PathTypes.packages.ToString())
             {
                 string[] tokenparts;
-                string username = "";
+                string username;
                 try
                 {
                     tokenparts = headerInfos[1].Split(' ');
@@ -44,27 +44,10 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidDataException("17");
+                    throw new InvalidDataException("17 (Token Error)");
                 }
-
-                //IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-                /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-                command.CommandText = "SELECT coins FROM users WHERE username=@username";*/
-
-                //IDataReader reader = command.ExecuteReader();
 
                 int usercoins = ReadTableUsers.GetCoins(username);
-
-                /*if (reader.Read())
-                {
-                    usercoins = reader.GetInt32(0);
-                }
-                else
-                {
-                    throw new InvalidDataException("19");
-                }*/
-                //command.Connection.Close();
 
                 if (usercoins < StandardValues.packageCost)
                 {
@@ -72,44 +55,24 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
                 else
                 {
-                    CardGenerator generator = new CardGenerator();
+                    CardGenerator generator = new();
                     List<Card> package = new();
                     package = generator.GeneratePackage(package);
 
                     foreach (var card in package)
                     {
                         WriteTableUsercards.InsertCard(card, username);
-
-                        //command = Database.DBConnection.ConnectionCreate();
-
-                        /*DBCreateParameter.AddParameterWithValue(command, "category", DbType.String, card.CardCategorie.ToString());
-                        DBCreateParameter.AddParameterWithValue(command, "cardtype", DbType.String, card.CardType.ToString());
-                        DBCreateParameter.AddParameterWithValue(command, "elementtype", DbType.String, card.ElementType.ToString());
-                        DBCreateParameter.AddParameterWithValue(command, "damage", DbType.Int32, card.Damage);
-                        DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-                        command.CommandText = "INSERT INTO usercards (category, cardtype, elementtype, damage, username) VALUES (@category, @cardtype, @elementtype, @damage, @username)";
-
-                        command.ExecuteNonQuery();
-                        command.Connection.Close();*/
                     }
 
 
                     usercoins -= StandardValues.packageCost;
 
                     WriteTableUsers.UpdateCoins(usercoins, username);
-
-                    //command = Database.DBConnection.ConnectionCreate();
-
-                    /*DBCreateParameter.AddParameterWithValue(command, "coins", DbType.Int32, usercoins);
-                    DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-                    command.CommandText = "UPDATE users SET coins=@coins WHERE username=@username";
-                    command.ExecuteNonQuery();
-                    command.Connection.Close();*/
                 }
             }
             else
             {
-                throw new InvalidDataException("18");
+                throw new InvalidDataException("18 (No Valid Path)");
             }
         }
     }

@@ -16,7 +16,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck
         {
             List<int> usercardsids = new();
 
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT usercardsid FROM userdeck WHERE username=@username";
@@ -28,12 +30,15 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck
                 usercardsids.Add(reader.GetInt32(0));
             }
 
+            connection.Close();
             return usercardsids;
         }
 
         public static bool UserdeckExist(string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT username FROM userdeck WHERE username=@username";

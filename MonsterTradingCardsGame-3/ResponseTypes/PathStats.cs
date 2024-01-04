@@ -19,7 +19,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             if (headerInfos[1] == "")
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("2 (Token Error)");
             }
 
             string requestType = headerInfos[2];
@@ -29,35 +29,25 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
         private void GetRequest(string[] headerInfos, HTTP_Response response)
         {
-            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            string[] parts = headerInfos[1].Split(' ');
-            string username = (parts[1].Split('-'))[0];
+            string[] tokenparts;
+            string username;
+            try
+            {
+                tokenparts = headerInfos[1].Split(' ');
+                username = (tokenparts[1].Split('-'))[0];
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException("17 (Error at Token)");
+            }
 
             ReadTableUsers.GetUserStats(response, username);
-
-            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-            command.CommandText = "SELECT username, elo, wins, loses FROM users WHERE username=@username";
-            using IDataReader reader = command.ExecuteReader();
-            if (!reader.Read())
-            {
-                throw new InvalidDataException("4");
-            }*/
-
-            /*int winloseR = 0;
-            int wins = reader.GetInt32(2);
-            int loses = reader.GetInt32(3);
-            winloseR = WinLoseRatio.WinLoseRatioCalc(wins, loses);
-            response.scoreboard = new List<string>
-            {
-                reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR
-            };*/
         }
     }
 }

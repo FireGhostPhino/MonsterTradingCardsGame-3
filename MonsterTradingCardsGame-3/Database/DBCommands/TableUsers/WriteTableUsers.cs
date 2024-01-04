@@ -13,7 +13,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
     {
         public static void InsertUser(User? user)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             command.CommandText = "INSERT INTO users (username, password, elo, coins, wins, loses) " +
             "VALUES (@username, @password, @elo, @coins, @wins, @loses)";
@@ -29,7 +31,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void UpdatePassword(string username, string password)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, password);
@@ -40,7 +44,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void UpdateCoins(int usercoins, string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "coins", DbType.Int32, usercoins);
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);

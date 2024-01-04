@@ -32,7 +32,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation)
         {
             string[] tokenparts;
-            string username = "";
+            string username;
             try
             {
                 tokenparts = headerInfos[1].Split(' ');
@@ -44,25 +44,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
 
             ReadTableUsercards.GetUserOwnedCards(response, username);
-
-            /*IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-            command.CommandText = "SELECT id, category,cardtype,elementtype,damage FROM usercards WHERE username=@username";
-
-            IDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                response.cards.Add(new Card()
-                {
-                    Id = reader.GetInt32(0),
-                    CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(1)),
-                    CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(2)),
-                    ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
-                    Damage = reader.GetInt32(4),
-                });
-            }*/
         }
     }
 }

@@ -26,10 +26,8 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 (headerInfos[1] == "" || ((pathSplitted.Length > 1) &&
                 (headerInfos[1] != (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost)))))
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("2 (Token Error)");
             }
-
-            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             if (requestType == Enums.RequestTypes.GET.ToString())
             {
@@ -45,44 +43,18 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
         private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response)
         {
-            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
             if ((pathSplitted.Length > 1) &&
                 (headerInfos[1] == (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost)))
             {
                 string username = pathSplitted[1];
 
                 ReadTableUsers.GetSingleUserData(response, username);
-
-                /*Database.DBCommands.DBPathUsers.CommandSingleUserData(command, username);
-
-                using IDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    User user = new()
-                    {
-                        Id = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        Elo = reader.GetInt32(3),
-                        Coins = reader.GetInt32(4),
-                        Wins = reader.GetInt32(5),
-                        Loses = reader.GetInt32(6),
-                    };
-
-                    response.UserData = user;
-                }
-                else
-                {
-                    throw new ArgumentException("6");
-                }*/
             }
             else if((headerInfos[1] == (StandardValues.tokenPre + "admin" + StandardValues.tokenPost)) ||
                     (headerInfos[1] == (StandardValues.tokenPre + "ADMIN" + StandardValues.tokenPost)))
@@ -90,30 +62,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 Console.WriteLine("Admin Data request");
 
                 ReadTableUsers.GetAllUserData(response);
-
-                /*Database.DBCommands.DBPathUsers.CommandAllUserData(command);
-
-                using IDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    response.allUserData.Add(new User()
-                    {
-                        Id = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        Elo = reader.GetInt32(3),
-                        Coins = reader.GetInt32(4),
-                        Wins = reader.GetInt32(5),
-                        Loses = reader.GetInt32(6),
-                    });
-                }*/
             }
         }
 
         private void PostRequest(string bodyInformation)
         {
-            //IDbCommand command = Database.DBConnection.ConnectionCreate();
             User? user;
             try
             {
@@ -126,38 +79,19 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11");
+                throw new InvalidDataException("11 (Body reading error)");
             }
-
-            //Database.DBCommands.DBPathUsers.CommandUserExist(command, user.Username);
-            
-            //using IDataReader reader = command.ExecuteReader();
-
-            /*if (reader.Read())
-            {
-                throw new ArgumentException("4");
-            }*/
 
             if(ReadTableUsers.UsernameExist(user.Username) == true)
             {
-                throw new ArgumentException("4");
+                throw new ArgumentException("4 (Username already existing)");
             }
 
-
-            //command.Connection.Close();
-
             WriteTableUsers.InsertUser(user);
-
-            /*command = Database.DBConnection.ConnectionCreate();
-
-            Database.DBCommands.DBPathUsers.CommandUserInsert(command, user);
-
-            command.ExecuteNonQuery();*/
         }
 
         private void PutRequest(string[] pathSplitted, string bodyInformation, string[] headerInfos)
         {
-            //IDbCommand command = Database.DBConnection.ConnectionCreate();
             User? user;
             string username;
             try
@@ -173,42 +107,23 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11");
+                throw new InvalidDataException("11 (Body reading error)");
             }
 
             if (username != user.Username)
             {
-                throw new InvalidDataException("22");
+                throw new InvalidDataException("22 (mismatching data)");
             }
-
-            //DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-            //command.CommandText = "SELECT password FROM users WHERE username=@username";
-            //using IDataReader reader = command.ExecuteReader();
-            /*if (!reader.Read())
-            {
-                throw new InvalidDataException("4");
-            }
-            string password = reader.GetString(0);*/
 
             string password = ReadTableUsers.GetPassword(user.Username);
-
-            //command.Connection.Close();
-
-
-            //command = Database.DBConnection.ConnectionCreate();
 
             if ((password == user.Password) && (headerInfos[1] == (StandardValues.tokenPre + user.Username + StandardValues.tokenPost)))
             {
                 WriteTableUsers.UpdatePassword(user.Username, user.NewPassword);
-
-                /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, user.Username);
-                DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, user.NewPassword);
-                command.CommandText = "UPDATE users SET password=@password WHERE username=@username";
-                command.ExecuteNonQuery();*/
             }
             else
             {
-                throw new InvalidDataException("6");
+                throw new InvalidDataException("6 (mismatching data)");
             }
         }
     }

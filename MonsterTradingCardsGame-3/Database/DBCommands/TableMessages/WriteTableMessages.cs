@@ -12,7 +12,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableMessages
     {
         public static void SaveMessage(Message? message, DateTime dateTime)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             command.CommandText = "INSERT INTO messages (username, message, messagetime) " +
             "VALUES (@username, @message, @messagetime)";
@@ -21,6 +23,8 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableMessages
             DBCreateParameter.AddParameterWithValue(command, "messagetime", DbType.DateTime2, dateTime);
 
             command.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }

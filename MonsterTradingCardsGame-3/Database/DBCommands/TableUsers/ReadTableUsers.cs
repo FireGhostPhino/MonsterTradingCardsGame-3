@@ -14,7 +14,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
     {
         public static void GetSingleUserData(HTTP_Response response, string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT * FROM users WHERE username=@username";
@@ -40,11 +42,15 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             {
                 throw new ArgumentException("6 (No user with this username)");
             }
+
+            connection.Close();
         }
 
         public static void GetAllUserData(HTTP_Response response)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             command.CommandText = "SELECT * FROM users ORDER BY id ASC";
 
@@ -63,11 +69,15 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
                     Loses = reader.GetInt32(6),
                 });
             }
+
+            connection.Close();
         }
 
         public static bool UsernameExist(string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT username FROM users WHERE username=@username";
@@ -86,7 +96,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static string GetPassword(string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT password FROM users WHERE username=@username";
@@ -105,7 +117,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static int GetCoins(string username)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT coins FROM users WHERE username=@username";
@@ -124,7 +138,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void GetUserStats(HTTP_Response response, string username)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             command.CommandText = "SELECT username, elo, wins, loses FROM users WHERE username=@username";
@@ -143,11 +159,15 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             {
                 reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR
             };
+
+            connection.Close();
         }
 
         public static void UsernamePasswordCheck(HTTP_Response response, string username, string password)
         {
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
             DBCreateParameter.AddParameterWithValue(command, "password", DbType.String, password);
@@ -169,7 +189,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
         {
             response.scoreboard = new List<string>();
 
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             command.CommandText = "SELECT username,elo, wins, loses FROM users ORDER BY elo DESC";
             using IDataReader reader = command.ExecuteReader();
@@ -184,6 +206,8 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
                 winloseR = WinLoseRatio.WinLoseRatioCalc(wins, loses);
                 response.scoreboard.Add(reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR);
             }
+
+            connection.Close();
         }
     }
 }

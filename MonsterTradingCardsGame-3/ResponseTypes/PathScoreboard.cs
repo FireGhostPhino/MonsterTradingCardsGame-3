@@ -17,7 +17,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
         {
             if (headerInfos[1] == "")
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("2 (Token Error)");
             }
 
             string requestType = headerInfos[2];
@@ -27,30 +27,13 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("2");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
         private void GetRequest(HTTP_Response response)
         {
-            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            /*command.CommandText = "SELECT username,elo, wins, loses FROM users ORDER BY elo DESC";
-            using IDataReader reader = command.ExecuteReader();
-            response.scoreboard = new List<string>();*/
-
             ReadTableUsers.GetScoreboardData(response);
-
-            /*int winloseR = 0;
-            int wins = 0;
-            int loses = 0;
-            while (reader.Read())
-            {
-                wins = reader.GetInt32(2);
-                loses = reader.GetInt32(3);
-                winloseR = WinLoseRatio.WinLoseRatioCalc(wins, loses);
-                response.scoreboard.Add(reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR);
-            }*/
         }
     }
 }

@@ -12,7 +12,9 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableMessages
     {
         public static void GetAllMessages(HTTP_Response response)
         {
-            using IDbCommand command = DBConnection.ConnectionCreate();
+            //using IDbCommand command = DBConnection.ConnectionCreate();
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
             command.CommandText = "SELECT * FROM messages ORDER BY id ASC";
 
@@ -28,6 +30,8 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableMessages
                     MessageTime = reader.GetDateTime(3)
                 });
             }
+
+            connection.Close();
         }
     }
 }

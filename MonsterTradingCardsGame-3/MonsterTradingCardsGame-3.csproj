@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ResponseTypes\PathDeck.cs~RF10fee7e8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Npgsql" Version="7.0.6" />
   </ItemGroup>
 

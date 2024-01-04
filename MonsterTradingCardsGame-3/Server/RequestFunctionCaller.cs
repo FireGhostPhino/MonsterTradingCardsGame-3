@@ -47,13 +47,13 @@ namespace MonsterTradingCardsGame_3.Server
             {
                 ResponseTypes.PathChatroom requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
-            else if (pathSplitted[0] == Enums.PathTypes.chatroom.ToString())
+            else if (pathSplitted[0] == Enums.PathTypes.battles.ToString())
             {
                 ResponseTypes.PathBattles requestHandler = new(headerInfos, pathSplitted, bodyInformation, response);
             }
             else
             {
-                throw new ProcessingException(3);
+                throw new InvalidDataException("3 (invalid request path)");
             }
         }
     }

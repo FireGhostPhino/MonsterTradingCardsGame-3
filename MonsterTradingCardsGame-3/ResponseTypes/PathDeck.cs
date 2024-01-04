@@ -33,7 +33,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             else
             {
-                throw new InvalidDataException("3");
+                throw new InvalidDataException("3 (invalid request type)");
             }
         }
 
@@ -55,52 +55,14 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             List<int> usercardsids = new();
 
-
-            //IDbCommand command = Database.DBConnection.ConnectionCreate();
-
             string[] tokenparts = headerInfos[1].Split(' ');
             string username = (tokenparts[1].Split('-'))[0];
 
             usercardsids = ReadTableUserdeck.GetUserdeck(username);
 
-            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-            command.CommandText = "SELECT usercardsid FROM userdeck WHERE username=@username";
-
-            IDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                usercardsids.Add(reader.GetInt32(0));
-            }*/
-
-            //command.Connection.Close();
-
             if (usercardsids.Count == 4)
             {
-                //command = Database.DBConnection.ConnectionCreate();
-
                 ReadTableUsercards.GetUserdeckValues(response, username, usercardsids);
-
-                /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
-                DBCreateParameter.AddParameterWithValue(command, "id1", DbType.Int32, usercardsids[0]);
-                DBCreateParameter.AddParameterWithValue(command, "id2", DbType.Int32, usercardsids[1]);
-                DBCreateParameter.AddParameterWithValue(command, "id3", DbType.Int32, usercardsids[2]);
-                DBCreateParameter.AddParameterWithValue(command, "id4", DbType.Int32, usercardsids[3]);
-                command.CommandText = "SELECT id, category,cardtype,elementtype,damage FROM usercards WHERE (id=@id1 OR id=@id2 OR id=@id3 OR id=@id4) AND username=@username";
-
-                reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    response.cards.Add(new Card()
-                    {
-                        Id = reader.GetInt32(0),
-                        CardCategorie = (Enums.CardCategories)Enum.Parse(typeof(Enums.CardCategories), reader.GetString(1)),
-                        CardType = (Enums.CardTypes)Enum.Parse(typeof(Enums.CardTypes), reader.GetString(2)),
-                        ElementType = (Enums.Elements)Enum.Parse(typeof(Enums.Elements), reader.GetString(3)),
-                        Damage = reader.GetInt32(4),
-                    });
-                }*/
             }
         }
 
@@ -153,45 +115,17 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new InvalidDataException("13 (every card is only once allowed in the deck)");
             }
 
-            //IDbCommand command = Database.DBConnection.ConnectionCreate();
-
-            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-            command.CommandText = "SELECT username FROM userdeck WHERE username=@username";*/
-
-            //IDataReader reader = command.ExecuteReader();
-
             bool existingDeck = false;
-            /*if (reader.Read())
-            {
-                existingDeck = true;
-            }*/
 
             if(ReadTableUserdeck.UserdeckExist(deck.Username) == true)
             {
                 existingDeck = true;
             }
 
-            //command.Connection.Close();
-
-
-            //command = Database.DBConnection.ConnectionCreate();
             List<Card> cards = new();
             int allCardsOwned = 0;
 
             cards = ReadTableUsercards.GetUserOwnedCardIds(deck.Username);
-
-            /*DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-            command.CommandText = "SELECT id FROM usercards WHERE username=@username";*/
-
-            /*reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                cards.Add(new Card()
-                {
-                    Id = reader.GetInt32(0),
-                });
-            }*/
 
             if(cards.Count < 4)
             {
@@ -214,13 +148,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             if (existingDeck)
             {
                 WriteTableUserdeck.DeleteUserDeck(deck.Username);
-
-                /*command = Database.DBConnection.ConnectionCreate();
-
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                command.CommandText = "DELETE FROM userdeck WHERE username=@username";
-                command.ExecuteNonQuery();
-                command.Connection.Close();*/
             }
 
             try
@@ -229,34 +156,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId2);
                 WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId3);
                 WriteTableUserdeck.AddUserdeckCard(deck.Username, deck.CardId4);
-
-                /*command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId1);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId2);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId3);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();
-
-                command = Database.DBConnection.ConnectionCreate();
-                DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, deck.Username);
-                DBCreateParameter.AddParameterWithValue(command, "usercardsid", DbType.Int32, deck.CardId4);
-                command.CommandText = "INSERT INTO userdeck (usercardsid, username) VALUES (@usercardsid, @username)";
-                command.ExecuteNonQuery();
-                command.Connection.Close();*/
             }
             catch (Exception e)
             {
