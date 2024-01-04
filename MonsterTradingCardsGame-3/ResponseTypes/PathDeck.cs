@@ -15,7 +15,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MonsterTradingCardsGame_3.ResponseTypes
 {
-    internal class PathDeck
+    public class PathDeck
     {
         public PathDeck(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response, string parameters)
         {
@@ -35,7 +35,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
         }
 
-        private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation, string parameters)
+        public static void DeckFormatPlain(HTTP_Response response, string parameters)
         {
             if (parameters != "")
             {
@@ -45,6 +45,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                     response.plainOutput = true;
                 }
             }
+        }
+
+        private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response, string bodyInformation, string parameters)
+        {
+            DeckFormatPlain(response, parameters);
 
             List<int> usercardsids = new();
 

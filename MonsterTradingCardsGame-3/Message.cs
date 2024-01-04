@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3
 {
-    internal class Message
+    public class Message
     {
         public Message() { }
 

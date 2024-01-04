@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3.Server
 {
-    internal class HTTP_Response
+    public class HTTP_Response
     {
         private Users.User? _userData = null;
         public List<User> allUserData = new();
@@ -91,9 +91,14 @@ namespace MonsterTradingCardsGame_3.Server
         public void CreateERRORResponse(StreamWriter writer, string errorCode)
         {
             writer.WriteLine("HTTP/1.1 400 Bad Request");
-            writer.WriteLine("Content-Type: text/html; charset=utf-8");
+            writer.WriteLine(AnswerSettingsContenttype());
             writer.WriteLine();
             writer.WriteLine("<html><body><h1>Error in request occured!</h1><a>Error: " + errorCode + "</a></body></html>");
+        }
+
+        public string AnswerSettingsContenttype()
+        {
+            return "Content-Type: text/html; charset=utf-8";
         }
     }
 }

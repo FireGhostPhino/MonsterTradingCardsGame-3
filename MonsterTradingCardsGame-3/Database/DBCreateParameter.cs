@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardsGame_3.Database
 {
-    internal class DBCreateParameter
+    public class DBCreateParameter
     {
         public static void AddParameterWithValue(IDbCommand command, string parameterName, DbType dbType, object value)
         {

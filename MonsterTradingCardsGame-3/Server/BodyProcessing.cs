@@ -43,7 +43,11 @@ namespace MonsterTradingCardsGame_3.Server
 
         public string CommandListener(string command)
         {
-            if(command == "server:quit")
+            if (command == "quit")
+            {
+                return (-1).ToString();
+            }
+            else if (command == "server:quit")
             {
                 return (-2).ToString();
             }

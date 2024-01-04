@@ -28,19 +28,19 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new InvalidDataException("2");
             }
 
-            using IDbCommand command = Database.DBConnection.ConnectionCreate();
+            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
             if (requestType == Enums.RequestTypes.GET.ToString())
             {
-                GetRequest(pathSplitted, command, headerInfos, response);
+                GetRequest(pathSplitted, headerInfos, response);
             }
             else if(requestType == Enums.RequestTypes.POST.ToString())
             {
-                PostRequest(bodyInformation, command);
+                PostRequest(bodyInformation);
             }
             else if(requestType == Enums.RequestTypes.PUT.ToString())
             {
-                PutRequest(pathSplitted, bodyInformation, command, headerInfos);
+                PutRequest(pathSplitted, bodyInformation, headerInfos);
             }
             else
             {
@@ -48,14 +48,18 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
         }
 
-        private void GetRequest(string[] pathSplitted, IDbCommand command, string[] headerInfos, HTTP_Response response)
+        private void GetRequest(string[] pathSplitted, string[] headerInfos, HTTP_Response response)
         {
+            //using IDbCommand command = Database.DBConnection.ConnectionCreate();
+
             if ((pathSplitted.Length > 1) &&
                 (headerInfos[1] == (StandardValues.tokenPre + pathSplitted[1] + StandardValues.tokenPost)))
             {
                 string username = pathSplitted[1];
 
-                Database.DBCommands.DBPathUsers.CommandSingleUserData(command, username);
+                Database.DBCommands.ReadTableUsers.GetSingleUserData(response, username);
+
+                /*Database.DBCommands.DBPathUsers.CommandSingleUserData(command, username);
 
                 using IDataReader reader = command.ExecuteReader();
 
@@ -77,14 +81,16 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 else
                 {
                     throw new ArgumentException("6");
-                }
+                }*/
             }
             else if((headerInfos[1] == (StandardValues.tokenPre + "admin" + StandardValues.tokenPost)) ||
                     (headerInfos[1] == (StandardValues.tokenPre + "ADMIN" + StandardValues.tokenPost)))
             {
                 Console.WriteLine("Admin Data request");
 
-                Database.DBCommands.DBPathUsers.CommandAllUserData(command);
+                Database.DBCommands.ReadTableUsers.GetAllUserData(response);
+
+                /*Database.DBCommands.DBPathUsers.CommandAllUserData(command);
 
                 using IDataReader reader = command.ExecuteReader();
 
@@ -100,12 +106,13 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                         Wins = reader.GetInt32(5),
                         Loses = reader.GetInt32(6),
                     });
-                }
+                }*/
             }
         }
 
-        private void PostRequest(string bodyInformation, IDbCommand command)
+        private void PostRequest(string bodyInformation)
         {
+            //IDbCommand command = Database.DBConnection.ConnectionCreate();
             User? user;
             try
             {
@@ -121,25 +128,35 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 throw new InvalidDataException("11");
             }
 
-            Database.DBCommands.DBPathUsers.CommandUserExist(command, user.Username);
+            //Database.DBCommands.DBPathUsers.CommandUserExist(command, user.Username);
             
-            using IDataReader reader = command.ExecuteReader();
+            //using IDataReader reader = command.ExecuteReader();
 
-            if (reader.Read())
+            /*if (reader.Read())
+            {
+                throw new ArgumentException("4");
+            }*/
+
+            if(Database.DBCommands.ReadTableUsers.UsernameExist(user.Username) == true)
             {
                 throw new ArgumentException("4");
             }
 
-            command.Connection.Close();
-            command = Database.DBConnection.ConnectionCreate();
+
+            //command.Connection.Close();
+
+            Database.DBCommands.WriteTableUsers.InsertUser(user);
+
+            /*command = Database.DBConnection.ConnectionCreate();
 
             Database.DBCommands.DBPathUsers.CommandUserInsert(command, user);
 
-            command.ExecuteNonQuery();
+            command.ExecuteNonQuery();*/
         }
 
-        private void PutRequest(string[] pathSplitted, string bodyInformation, IDbCommand command, string[] headerInfos)
+        private void PutRequest(string[] pathSplitted, string bodyInformation, string[] headerInfos)
         {
+            IDbCommand command = Database.DBConnection.ConnectionCreate();
             User? user;
             string username;
             try

@@ -87,7 +87,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             using IDbCommand command = Database.DBConnection.ConnectionCreate();
 
-            DateTime dateTime = DateTime.Now;
+            DateTime dateTime = GeneralHelpFunctions.CurrentTime.CurrentDateTime();
 
             command.CommandText = "INSERT INTO messages (username, message, messagetime) " +
             "VALUES (@username, @message, @messagetime)";

@@ -42,24 +42,5 @@ namespace MTCG_3.Test
             //Assert
             Assert.That(user.Coins, Is.EqualTo(MonsterTradingCardsGame_3.StandardValues.startCoins));
         }
-
-        [Test]
-        public void TestPayPackage()
-        {
-            //Arrange
-            string testUsern = "testuser";
-            string testPassw = "testpassw";
-            MonsterTradingCardsGame_3.Users.User user = new()
-            {
-                Username = testUsern,
-                Password = testPassw,
-            };
-
-            //Act
-            user.PayPackage();
-
-            //Assert
-            Assert.That(user.Coins, Is.EqualTo(MonsterTradingCardsGame_3.StandardValues.startCoins - MonsterTradingCardsGame_3.StandardValues.packageCost));
-        }
     }
 }

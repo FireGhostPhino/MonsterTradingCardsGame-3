@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Database;
+using MonsterTradingCardsGame_3.GeneralHelpFunctions;
 using MonsterTradingCardsGame_3.Server;
 using MonsterTradingCardsGame_3.Users;
 using System;
@@ -49,14 +50,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             int winloseR = 0;
             int wins = reader.GetInt32(2);
             int loses = reader.GetInt32(3);
-            if (loses > 0)
-            {
-                winloseR = wins / loses;
-            }
-            else
-            {
-                winloseR = wins;
-            }
+            winloseR = WinLoseRatio.WinLoseRatioCalc(wins, loses);
             response.scoreboard = new List<string>
             {
                 reader.GetString(0) + ": " + reader.GetInt32(1) + " - " + wins + "/" + loses + " - " + winloseR

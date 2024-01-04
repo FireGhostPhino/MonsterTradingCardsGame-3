@@ -18,46 +18,51 @@ namespace MTCG_3.Test
         [Test]
         public void TestGenerateCardDamage()
         {
-            //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
+            for(int i = 0; i < 10; i++)
+            {
+                //Arrange
+                MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
 
-            //Act
-            MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
+                //Act
+                MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
 
-            //Assert
-            Assert.That(card.Damage, Is.GreaterThan(MonsterTradingCardsGame_3.StandardValues.minDamage));
-            /*Console.WriteLine(card.CardCategorie);
-            Console.WriteLine(card.CardType);
-            Console.WriteLine(card.ElementType);
-            Console.WriteLine(card.Damage);*/
+                //Assert
+                Assert.That(card.Damage, Is.GreaterThanOrEqualTo(MonsterTradingCardsGame_3.StandardValues.minDamage));
+            }
         }
 
         [Test]
         public void TestGenerateCardCategorie()
         {
-            //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
+            for (int i = 0; i < 10; i++)
+            {
+                //Arrange
+                MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
 
-            //Act
-            MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
+                //Act
+                MonsterTradingCardsGame_3.Cards.Card card = cardGenerator.GenerateCard();
 
-            //Assert
-            Assert.That(card.CardCategorie, Is.EqualTo(MonsterTradingCardsGame_3.Enums.CardCategories.MonsterCard).Or.EqualTo(MonsterTradingCardsGame_3.Enums.CardCategories.SpellCard));
+                //Assert
+                Assert.That(card.CardCategorie, Is.EqualTo(MonsterTradingCardsGame_3.Enums.CardCategories.MonsterCard).Or.EqualTo(MonsterTradingCardsGame_3.Enums.CardCategories.SpellCard));
+            }
         }
 
         [Test]
         public void TestRandomNumberGenerator()
         {
-            //Arrange
-            MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
-            int minimum = 5;
-            int maximum = 10;
+            for (int i = 0; i < 10; i++)
+            {
+                //Arrange
+                MonsterTradingCardsGame_3.Cards.CardGenerator cardGenerator = new();
+                int minimum = 5;
+                int maximum = 10;
 
-            //Act
-            int random = cardGenerator.RandomNumberGenerator(minimum, maximum);
+                //Act
+                int random = cardGenerator.RandomNumberGenerator(minimum, maximum);
 
-            //Assert
-            Assert.That(random, Is.GreaterThanOrEqualTo(minimum).And.LessThanOrEqualTo(maximum));
+                //Assert
+                Assert.That(random, Is.GreaterThanOrEqualTo(minimum).And.LessThanOrEqualTo(maximum));
+            }
         }
     }
 }

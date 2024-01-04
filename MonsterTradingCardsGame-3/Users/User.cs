@@ -1,4 +1,5 @@
 ﻿using MonsterTradingCardsGame_3.Cards;
+using MonsterTradingCardsGame_3.GeneralHelpFunctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -159,15 +160,7 @@ namespace MonsterTradingCardsGame_3.Users
 
         public override string ToString()
         {
-            int winloseR = 0;
-            if (Loses > 0)
-            {
-                winloseR = Wins / Loses;
-            }
-            else
-            {
-                winloseR = Wins;
-            }
+            int winloseR = WinLoseRatio.WinLoseRatioCalc(Wins, Loses);
             return $"Id: {Id}, Username: {Username}, Password: {Password}, Coins: {Coins}, Elo: {Elo}, Wins: {Wins}, Loses {Loses}, Win/Lose ratio: {winloseR}";
         }
     }
