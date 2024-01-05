@@ -14,7 +14,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
     {
         public static void GetUserdeckValues(HTTP_Response response, string username, List<int> usercardsids)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -46,7 +45,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
         {
             List<Card> cards = new();
 
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -79,7 +77,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
         {
             List<Card> cards = new();
 
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -102,7 +99,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
 
         public static void GetUserOwnedCards(HTTP_Response response, string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 

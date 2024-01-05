@@ -16,7 +16,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck
         {
             List<int> usercardsids = new();
 
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -36,7 +35,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck
 
         public static bool UserdeckExist(string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 

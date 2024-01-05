@@ -1,4 +1,6 @@
-﻿using MonsterTradingCardsGame_3.Cards;
+﻿using MonsterTradingCardsGame_3.Battle;
+using MonsterTradingCardsGame_3.Cards;
+using MonsterTradingCardsGame_3.Database.DBCommands.TableCardsuperiors;
 using MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards;
 using MonsterTradingCardsGame_3.Database.DBCommands.TableUserdeck;
 using MonsterTradingCardsGame_3.Database.DBCommands.TableUsers;
@@ -104,6 +106,16 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             List<Card> usercardsUser1 = ReadTableUsercards.ReturnUserdeckValues(battleUser1, usercardidsUser1);
             List<Card> usercardsUser2 = ReadTableUsercards.ReturnUserdeckValues(battleUser2, usercardidsUser2);
 
+
+            List<SuperiorCardPair> cardSuperiors = ReadTableCardsuperiors.GetAllCardsuperiors();
+
+            /*foreach (SuperiorCardPair card in cardSuperiors)
+            {
+                Console.WriteLine("-");
+                Console.WriteLine(card.ToString());
+            }*/
+
+
             Console.WriteLine("pre");
             Console.WriteLine(usercardsUser1.Count + ", " + usercardsUser2.Count);
             Console.WriteLine();
@@ -111,26 +123,71 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
 
 
-
+            BattleData battleData = new();
+            battleData.StartBattleLog(battleUser1, battleUser2);
             while (usercardsUser1.Count > 0 && usercardsUser2.Count > 0)
             {
-                Console.WriteLine("1");
+                int roundwinner = 0;
+                battleData.IncreaseRoundsTotal();
+                battleData.AddRoundCards(usercardsUser1[0], usercardsUser2[0]);
+                if (usercardsUser1[0].CardCategorie == Enums.CardCategories.MonsterCard && 
+                    usercardsUser2[0].CardCategorie == Enums.CardCategories.MonsterCard)
+                {
+                    roundwinner = battleMonsters(usercardsUser1[0], usercardsUser2[0], battleData, cardSuperiors);
+                }
+                else if(usercardsUser1[0].CardCategorie == Enums.CardCategories.SpellCard && 
+                        usercardsUser2[0].CardCategorie == Enums.CardCategories.SpellCard)
+                {
+                    roundwinner = battleSpells(usercardsUser1[0], usercardsUser2[0], battleData, cardSuperiors);
+                }
+                else
+                {
+                    roundwinner = battleMixed(usercardsUser1[0], usercardsUser2[0], battleData, cardSuperiors);
+                }
+
+                if(roundwinner == 0)
+                {
+                    battleData.AddRoundWinnerDraw();
+                    usercardsUser1.Add(usercardsUser1[0]);
+                    usercardsUser1.RemoveAt(0);
+                    usercardsUser2.Add(usercardsUser2[0]);
+                    usercardsUser2.RemoveAt(0);
+                }
+                else if(roundwinner == 1)
+                {
+                    battleData.AddRoundWinnerUser1(usercardsUser1[0]);
+                    usercardsUser1.Add(usercardsUser1[0]);
+                    usercardsUser1.RemoveAt(0);
+                    usercardsUser1.Add(usercardsUser2[0]);
+                    usercardsUser2.RemoveAt(0);
+                }
+                else if(roundwinner == 2)
+                {
+                    battleData.AddRoundWinnerUser2(usercardsUser2[0]);
+                    usercardsUser2.Add(usercardsUser2[0]);
+                    usercardsUser2.RemoveAt(0);
+                    usercardsUser2.Add(usercardsUser1[0]);
+                    usercardsUser1.RemoveAt(0);
+                }
+
+                Console.WriteLine(usercardsUser1.Count + ", " + usercardsUser2.Count);
+                /*Console.WriteLine("1");
                 usercardsUser2.Add(usercardsUser1[0]);
                 Console.WriteLine("2");
                 usercardsUser1.RemoveAt(0);
                 Console.WriteLine("3");
                 Console.WriteLine(usercardsUser1.Count + ", " + usercardsUser2.Count);
-                Console.WriteLine();
+                Console.WriteLine();*/
             }
 
 
 
-
+            Console.WriteLine(battleData.ToString());
 
             Console.WriteLine("post");
             Console.WriteLine(usercardsUser1.Count + ", " + usercardsUser2.Count);
 
-            if(usercardsUser1.Count > 0)
+            /*if(usercardsUser1.Count > 0)
             {
                 for(int j = 0; j < usercardsUser1.Count; j++)
                 {
@@ -147,7 +204,49 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
                 WriteTableUserdeck.DeleteUserDeck(battleUser1);
                 Console.WriteLine("End Battle - " + battleUser2 + " won!");
+            }*/
+        }
+
+        private int battleMonsters(Card cardUser1, Card cardUser2, BattleData battleData, List<SuperiorCardPair> cardSuperiors)
+        {
+            SuperiorCardPairCheck superiorCardPair = new();
+            int superiorCardUser = superiorCardPair.IsSuperiorCardPair(cardUser1, cardUser2, cardSuperiors);
+            //int superiorCardUser = SuperiorCardPairCheck.IsSuperiorCardPair(cardUser1, cardUser2, cardSuperiors);
+
+            battleData.AddRoundDamage(cardUser1.Damage, cardUser2.Damage);
+            Console.WriteLine("____ " + superiorCardUser);
+            if (superiorCardUser == 1)
+            {
+                return 1;
             }
+            else if(superiorCardUser == 2)
+            {
+                return 2;
+            }
+
+            if(cardUser1.Damage > cardUser2.Damage)
+            {
+                return 1;
+            }
+            else if(cardUser2.Damage > cardUser1.Damage) 
+            { 
+                return 2;
+            }
+            return 0;
+        }
+
+        private int battleSpells(Card cardUser1, Card cardUser2, BattleData battleData, List<SuperiorCardPair> cardSuperiors)
+        {
+
+
+            return 0;
+        }
+
+        private int battleMixed(Card cardUser1, Card cardUser2, BattleData battleData, List<SuperiorCardPair> cardSuperiors)
+        {
+
+
+            return 0;
         }
     }
 }

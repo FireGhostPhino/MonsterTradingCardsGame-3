@@ -14,7 +14,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
     {
         public static void GetSingleUserData(HTTP_Response response, string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -48,7 +47,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void GetAllUserData(HTTP_Response response)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -75,7 +73,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static bool UsernameExist(string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -96,7 +93,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static string GetPassword(string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -117,7 +113,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static int GetCoins(string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -138,7 +133,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void GetUserStats(HTTP_Response response, string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -165,7 +159,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
         public static void UsernamePasswordCheck(HTTP_Response response, string username, string password)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -189,7 +182,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
         {
             response.scoreboard = new List<string>();
 
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 

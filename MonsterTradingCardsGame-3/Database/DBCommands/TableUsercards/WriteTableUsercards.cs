@@ -13,7 +13,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
     {
         public static void InsertCard(Card? card, string username)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
@@ -31,7 +30,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsercards
 
         public static void ChangeCardOwner(string username, int cardId)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 

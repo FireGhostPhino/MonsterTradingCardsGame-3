@@ -23,14 +23,5 @@ namespace MonsterTradingCardsGame_3.Database
             connection.Open();
             return command;
         }
-
-        public static IDbCommand ConnectionCreateOrigial()
-        {
-            string connectionString = "Host = localhost; Database = mtcgdb; Username = postgres; Password = postgres";
-            IDbConnection connection = new NpgsqlConnection(connectionString);
-            IDbCommand command = connection.CreateCommand();
-            connection.Open();
-            return command;
-        }
     }
 }

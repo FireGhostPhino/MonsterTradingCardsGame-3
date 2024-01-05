@@ -12,7 +12,6 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableMessages
     {
         public static void GetAllMessages(HTTP_Response response)
         {
-            //using IDbCommand command = DBConnection.ConnectionCreate();
             using IDbConnection connection = DBConnection.ConnectionCreate();
             using IDbCommand command = DBConnection.ConnectionOpen(connection);
 
