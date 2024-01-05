@@ -163,9 +163,9 @@ echo.
 
 REM --------------------------------------------------
 echo 12) stats
-curl -X GET http://localhost:10001/stats --header "Authorization: Bearer kienboec-mtcgToken"
+curl -X GET http://localhost:10001/stats --header "Authorization: Bearer battler1-mtcgToken"
 echo.
-curl -X GET http://localhost:10001/stats --header "Authorization: Bearer altenhof-mtcgToken"
+curl -X GET http://localhost:10001/stats --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 
@@ -183,11 +183,11 @@ ping localhost -n 10 >NUL 2>NUL
 
 REM --------------------------------------------------
 echo 15) Stats 
-echo kienboec
-curl -X GET http://localhost:10001/stats --header "Authorization: Bearer kienboec-mtcgToken"
+echo battler1
+curl -X GET http://localhost:10001/stats --header "Authorization: Bearer battler1-mtcgToken"
 echo.
-echo altenhof
-curl -X GET http://localhost:10001/stats --header "Authorization: Bearer altenhof-mtcgToken"
+echo battler2
+curl -X GET http://localhost:10001/stats --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 
