@@ -18,5 +18,7 @@ namespace MonsterTradingCardsGame_3
         public const int maxDamage = 90;
         public const string tokenPre = "Bearer ";
         public const string tokenPost = "-mtcgToken";
+        public const int cardDamageMultiplier = 2;
+        public const int cardDamageDivisor = 2;
     }
 }

@@ -87,36 +87,5 @@ namespace MonsterTradingCardsGame_3.Users
             }
             return false;
         }
-
-        /*public void PrintAllUsers()
-        {
-            if (UserListNull() == false)
-            {
-                Console.WriteLine("Keine Liste vorhanden!");
-                return;
-            }
-            Console.WriteLine(userList.Count);
-            for (int i = 0; i < userList.Count; i++)
-            {
-                Console.WriteLine("\nUser %d:", i);
-                Console.WriteLine(userList[i].Username);
-                Console.WriteLine(userList[i].Password);
-                Console.WriteLine(userList[i].Coins);
-                Console.WriteLine(userList[i].Elo);
-            }
-        }*/
-
-        /*public void PrintMultipleUsers(List<User> listOfUsers)
-        {
-            Console.WriteLine(listOfUsers.Count);
-            for (int i = 0; i < listOfUsers.Count; i++)
-            {
-                Console.WriteLine($"\nUser {i+1}:");
-                Console.WriteLine(listOfUsers[i].Username);
-                Console.WriteLine(listOfUsers[i].Password);
-                Console.WriteLine(listOfUsers[i].Coins);
-                Console.WriteLine(listOfUsers[i].Elo);
-            }
-        }*/
     }
 }

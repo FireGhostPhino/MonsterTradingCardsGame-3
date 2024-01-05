@@ -15,19 +15,6 @@ namespace MonsterTradingCardsGame_3.Users
         {
             SetStartValues();
         }
-        
-        /*public User(string username, string password, AllUsers userList)
-        {
-            if(userList.IsNewUsername(username))
-            {
-                AddUser(username, password);
-                //userList.AddUser(this);
-            }
-            else
-            {
-                Console.WriteLine("User mit diesem usernamen bereits vorhanden. Bitte anderen Usernamen wählen!");
-            }
-        }*/
 
         private int _id;
         private string _username = "";
@@ -116,47 +103,6 @@ namespace MonsterTradingCardsGame_3.Users
             cardStack = new List<Card>();
             cardDeck = new List<Card>();
         }
-
-        /*public bool ChangeUsername(string username, string password, string newUsername, AllUsers userList)
-        {
-            if (userList.IsNewUsername(newUsername) && userList.IsCorrectPassword(username, password))
-            {
-                Username = newUsername;
-                userList.ChangeUsername(username, newUsername);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }*/
-
-        /*public void PayPackage()
-        {
-            Coins -= StandardValues.packageCost;
-        }*/
-
-        /*public void PrintUser()
-        {
-            Console.WriteLine("\nUser:");
-            Console.WriteLine(Username);
-            Console.WriteLine(Password);
-            Console.WriteLine(Coins);
-            Console.WriteLine(Elo);
-        }*/
-
-        /*public void PrintCardStack()
-        {
-            Console.WriteLine("\nAnzahl Karten im Stack: " + cardStack.Count);
-            for (int i = 0; i < cardStack.Count; i++)
-            {
-                Console.WriteLine($"\nCard {i + 1}: ");
-                Console.WriteLine(cardStack[i].CardCategorie);
-                Console.WriteLine(cardStack[i].CardType);
-                Console.WriteLine(cardStack[i].ElementType);
-                Console.WriteLine(cardStack[i].Damage);
-            }
-        }*/
 
         public override string ToString()
         {

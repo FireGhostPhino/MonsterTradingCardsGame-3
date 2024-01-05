@@ -83,10 +83,12 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
             if (reader.Read())
             {
+                connection.Close();
                 return true;
             }
             else
             {
+                connection.Close();
                 return false;
             }
         }
@@ -103,10 +105,13 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
             if (reader.Read())
             {
-                return reader.GetString(0);
+                string password = reader.GetString(0);
+                connection.Close();
+                return password;
             }
             else
             {
+                connection.Close();
                 throw new InvalidDataException("404 (No user with this username)");
             }
         }
@@ -123,11 +128,14 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
             if (reader.Read())
             {
-                return reader.GetInt32(0);
+                int coins = reader.GetInt32(0);
+                connection.Close();
+                return coins;
             }
             else
             {
-                throw new InvalidDataException("19 (No user with this username)");
+                connection.Close();
+                throw new InvalidDataException("404 (No user with this username)");
             }
         }
 
@@ -142,7 +150,7 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
             if (!reader.Read())
             {
-                throw new InvalidDataException("4 (No user with this username)");
+                throw new InvalidDataException("404 (No user with this username)");
             }
 
             int winloseR = 0;
@@ -200,6 +208,75 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             }
 
             connection.Close();
+        }
+
+        public static int GetElo(string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "SELECT elo FROM users WHERE username=@username";
+
+            using IDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                int elo = reader.GetInt32(0);
+                connection.Close();
+                return elo;
+            }
+            else
+            {
+                connection.Close();
+                throw new InvalidDataException("404 (No user with this username)");
+            }
+        }
+
+        public static int GetWins(string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "SELECT wins FROM users WHERE username=@username";
+
+            using IDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                int wins = reader.GetInt32(0);
+                connection.Close();
+                return wins;
+            }
+            else
+            {
+                connection.Close();
+                throw new InvalidDataException("404 (No user with this username)");
+            }
+        }
+
+        public static int GetLoses(string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "SELECT loses FROM users WHERE username=@username";
+
+            using IDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                int loses = reader.GetInt32(0);
+                connection.Close();
+                return loses;
+            }
+            else
+            {
+                connection.Close();
+                throw new InvalidDataException("404 (No user with this username)");
+            }
         }
     }
 }

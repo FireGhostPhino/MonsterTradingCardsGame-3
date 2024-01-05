@@ -51,5 +51,41 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
 
             command.ExecuteNonQuery();
         }
+
+        public static void UpdateElo(int userElo, string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "userElo", DbType.Int32, userElo);
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "UPDATE users SET elo=@userElo WHERE username=@username";
+
+            command.ExecuteNonQuery();
+        }
+
+        public static void UpdateWins(int wins, string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "wins", DbType.Int32, wins);
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "UPDATE users SET wins=@wins WHERE username=@username";
+
+            command.ExecuteNonQuery();
+        }
+
+        public static void UpdateLoses(int loses, string username)
+        {
+            using IDbConnection connection = DBConnection.ConnectionCreate();
+            using IDbCommand command = DBConnection.ConnectionOpen(connection);
+
+            DBCreateParameter.AddParameterWithValue(command, "loses", DbType.Int32, loses);
+            DBCreateParameter.AddParameterWithValue(command, "username", DbType.String, username);
+            command.CommandText = "UPDATE users SET loses=@loses WHERE username=@username";
+
+            command.ExecuteNonQuery();
+        }
     }
 }

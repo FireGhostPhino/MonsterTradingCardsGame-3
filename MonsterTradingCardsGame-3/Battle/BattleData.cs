@@ -50,7 +50,7 @@ namespace MonsterTradingCardsGame_3.Battle
 
         public void StartBattleLog(string username1, string username2)
         {
-            BattleLog = BattleLog + username1 + " vs " + username2 + "\n";
+            BattleLog = BattleLog + "User 1: " + username1 + " vs User 2: " + username2 + "<br>\n";
         }
 
         public void AddRoundCards(Card cardUser1, Card cardUser2)
@@ -62,7 +62,6 @@ namespace MonsterTradingCardsGame_3.Battle
             BattleLog += cardUser2.ElementType;
             BattleLog += cardUser2.CardType;
             BattleLog = BattleLog + " (" + cardUser2.Damage + ")";
-            //BattleLog += " => ";
         }
 
         public void AddRoundDamage(int damageUser1, int damageUser2)
@@ -78,7 +77,7 @@ namespace MonsterTradingCardsGame_3.Battle
             BattleLog += " => ";
             BattleLog += cardUser1.ElementType;
             BattleLog += cardUser1.CardType;
-            BattleLog += " wins\n";
+            BattleLog += " wins<br>\n";
             RoundswonUser1 += 1;
         }
 
@@ -87,18 +86,34 @@ namespace MonsterTradingCardsGame_3.Battle
             BattleLog += " => ";
             BattleLog += cardUser2.ElementType;
             BattleLog += cardUser2.CardType;
-            BattleLog += " wins\n";
+            BattleLog += " wins<br>\n";
             RoundswonUser2 += 1;
         }
 
         public void AddRoundWinnerDraw()
         {
-            BattleLog += " Draw\n";
+            BattleLog += " Draw<br>\n";
+        }
+
+        public string GetBattleWinner(string username1, string username2, int numberDeckCardsUser1, int numberDeckCardsUser2)
+        {
+            if (numberDeckCardsUser2 == 0)
+            {
+                return $"Winner: User 1: {username1}! Contratulations!";
+            }
+            else if (numberDeckCardsUser1 == 0)
+            {
+                return $"Winner: User 2: {username2}! Contratulations!";
+            }
+            else
+            {
+                return $"Draw! User 1: {username1} and User 2: {username2} are equally strong!";
+            }
         }
 
         public override string ToString()
         {
-            return $"BattleLog: \n{BattleLog}\n RoundsTotal: {RoundsTotal}\n RoundswonUser1: {RoundswonUser1}\n RoundswonUser2: {RoundswonUser2}";
+            return $"BattleLog: <br>\n{BattleLog}<br>\nRounds Total: {RoundsTotal}<br>\nRounds won User1: {RoundswonUser1}<br>\nRounds won User2: {RoundswonUser2}";
         }
     }
 }

@@ -9,8 +9,6 @@ using System.Data;
 using Npgsql;
 using System.Xml.Linq;
 
-//Opera übernimmt Verbindung und kein anderer kann dann mehr Anfragen schicken! Wieso?
-
 namespace MonsterTradingCardsGame_3
 {
     internal class Program
@@ -19,10 +17,11 @@ namespace MonsterTradingCardsGame_3
         {
             Console.WriteLine("Start Programm MTCG-V3");
 
+            //Server start
             Server.Control server = new();
             server.ServerThreads();
 
-            //Console.WriteLine("End Programm MTCG-V3");
+            Console.WriteLine("End Programm MTCG-V3");
         }
     }
 }

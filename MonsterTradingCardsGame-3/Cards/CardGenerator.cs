@@ -16,37 +16,8 @@ namespace MonsterTradingCardsGame_3.Cards
             return random.Next(minimum, maximum);
         }
 
-        /*public void GeneratePackageLoop(User user)
-        {
-            while (user.Coins >= StandardValues.packageCost)
-            {
-                Console.WriteLine("\n" + user.Username + ": ");
-                Console.WriteLine($"Noch {user.Coins} Münzen über");
-                Console.WriteLine("Soll ein Package generiert werden? (y/N):");
-                string? input = Console.ReadLine();
-                if (input != "y" && input != "Y")
-                {
-                    break;
-                }
-                List<Card> package = new();
-                package = GeneratePackage(package);
-                PrintPackage(package);
-                Console.WriteLine("Soll das Package erworben werden um 5 Münzen? (y/N):");
-                input = Console.ReadLine();
-                if(input == "y" || input == "Y")
-                {
-                    for(int i = 0; i < package.Count; i++)
-                    {
-                        user.cardStack.Add(package[i]);
-                    }
-                    user.PayPackage();
-                }
-            }
-        }*/
-
         public List<Card> GeneratePackage(List<Card> package)
         {
-            //List<Card> package = new List<Card>();
             for (int i = 0; i < StandardValues.packageSize; i++)
             {
                 Card card = GenerateCard();
@@ -58,10 +29,17 @@ namespace MonsterTradingCardsGame_3.Cards
         public Card GenerateCard()
         {
             Card card = new();
-            int cardType = RandomNumberGenerator(0, Enum.GetNames(typeof(Enums.CardTypes)).Length);
+            /*int cardType = RandomNumberGenerator(0, Enum.GetNames(typeof(Enums.CardTypes)).Length);
+            card.CardType = (Enums.CardTypes)cardType;*/
+
+            int cardType = RandomNumberGenerator(0, (Enum.GetNames(typeof(Enums.CardTypes)).Length) +7);
+            if(cardType >= Enum.GetNames(typeof(Enums.CardTypes)).Length)
+            {
+                cardType = (int)Enums.CardTypes.Spell;
+            }
             card.CardType = (Enums.CardTypes)cardType;
 
-            if(card.CardType == Enums.CardTypes.Spell)
+            if (card.CardType == Enums.CardTypes.Spell)
             {
                 card.CardCategorie = Enums.CardCategories.SpellCard;
             }

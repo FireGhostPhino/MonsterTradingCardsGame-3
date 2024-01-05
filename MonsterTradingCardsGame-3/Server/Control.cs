@@ -21,6 +21,7 @@ namespace MonsterTradingCardsGame_3.Server
         private int serverquit;
         private int threadquit;
 
+        //Server
         public void ServerThreads()
         {
             Console.WriteLine("Server erreichbar unter: http://localhost:10001/");
@@ -38,7 +39,7 @@ namespace MonsterTradingCardsGame_3.Server
                     break;
                 }
                 var clientSocket = httpServer.AcceptTcpClient();
-                threads.Add(new(() => ServerControl(clientSocket, i)));
+                threads.Add(new(() => ServerControl(clientSocket, i)));     //Start von einzelnen Threads für Anfragen
                 threads[^1]?.Start();
                 if(threadquit != -1 && threads[threadquit] != null)
                 {
@@ -54,6 +55,7 @@ namespace MonsterTradingCardsGame_3.Server
             }
         }
 
+        //Server - Thread
         public void ServerControl(TcpClient clientSocket, int threadNumber)
         {
             while (true)
@@ -113,6 +115,7 @@ namespace MonsterTradingCardsGame_3.Server
                     lineNumber++;
                 }
 
+                //Check ob Command in Body enthalten ist
                 BodyProcessing body = new();
                 string bodyInformation = body.BodyProcesser(int.Parse(headerInfos[0]), reader);
 
@@ -121,27 +124,31 @@ namespace MonsterTradingCardsGame_3.Server
                     RequestReacter reactor = new();
                     HTTP_Response response = new();
 
+                    //Haupt-Verarbeitung der Anfrage
                     reactor.ProcessRequest(requestInformation, bodyInformation, headerInfos, response);
+                    //Ok Response bei keinem Fehler (throw error)
                     response.CreateOKResponse(writer);
                 }
                 catch (ProcessingException e)
                 {
                     HTTP_Response response = new();
+                    //Bei Fehler ERROR zurück schicken
                     response.CreateERRORResponse(writer, e.ErrorCode.ToString());
                 }
                 catch(Exception e)
                 {
                     HTTP_Response response = new();
+                    //Bei Fehler ERROR zurück schicken
                     response.CreateERRORResponse(writer, e.Message);
                 }
 
-
+                //Reaktion auf empfangenes Kommando
                 if (bodyInformation == "-1" || clientSocket.Connected == false)
                 {
                     threadquit = threadNumber;
                     return;
                 }
-                else if(bodyInformation == "-2")
+                else if(bodyInformation == "-2")    //Nach nächster fertiger Iteration wird Programm/Server beendet
                 {
                     serverquit = -2;
                     return;

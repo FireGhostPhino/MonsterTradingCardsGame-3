@@ -13,6 +13,7 @@ namespace MonsterTradingCardsGame_3.Server
 {
     internal class RequestReacter
     {
+        //Verarbeitung des Headers und weitergeben von wichtigen, aufbereiteten Header Daten
         public void ProcessRequest(string requestInformation, string bodyInformation, string[] headerInfos, HTTP_Response response)
         {
             string[] requestSplitted = requestInformation.Split(' ');
@@ -64,6 +65,7 @@ namespace MonsterTradingCardsGame_3.Server
 
                 headerInfos[2] = requestType;
                 headerInfos[3] = requestPath;
+                //Aufruf von entsprechender Klasse/Funktion für Anfragepfad
                 RequestFunctionCaller requestFunctionCaller = new(pathSplitted, headerInfos, bodyInformation, response, parameters);
             }
         }

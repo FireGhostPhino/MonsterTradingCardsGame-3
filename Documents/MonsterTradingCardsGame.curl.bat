@@ -85,50 +85,50 @@ echo.
 
 REM --------------------------------------------------
 echo 7) show unconfigured deck
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test20-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler1-mtcgToken"
 echo.
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test17-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 
 REM --------------------------------------------------
 echo 8) configure deck
-curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer test20-mtcgToken" -d "[\"60\", \"65\", \"67\", \"68\"]"
+curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer battler1-mtcgToken" -d "[\"1\", \"2\", \"3\", \"4\"]"
 echo.
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test20-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler1-mtcgToken"
 echo.
-curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer test17-mtcgToken" -d "[\"90\", \"91\", \"92\", \"93\"]"
+curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer battler2-mtcgToken" -d "[\"6\", \"7\", \"9\", \"10\"]"
 echo.
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test17-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 echo should fail and show original from before:
-curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer test17-mtcgToken" -d "[\"60\", \"65\", \"67\", \"68\"]"
+curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer battler2-mtcgToken" -d "[\"1\", \"2\", \"3\", \"4\"]"
 echo.
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test17-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 echo should fail ... only 3 cards set
-curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer test20-mtcgToken" -d "[\"60\", \"65\", \"67\"]"
+curl -X PUT http://localhost:10001/deck --header "Content-Type: application/json" --header "Authorization: Bearer battler1-mtcgToken" -d "[\"1\", \"2\", \"3\"]"
 echo.
 
 
 REM --------------------------------------------------
 echo 9) show configured deck 
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test20-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler1-mtcgToken"
 echo.
-curl -X GET http://localhost:10001/deck --header "Authorization: Bearer test17-mtcgToken"
+curl -X GET http://localhost:10001/deck --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 
 REM --------------------------------------------------
 echo 10) show configured deck different representation
 echo kienboec
-curl -X GET http://localhost:10001/deck?format=plain --header "Authorization: Bearer test20-mtcgToken"
+curl -X GET http://localhost:10001/deck?format=plain --header "Authorization: Bearer battler1-mtcgToken"
 echo.
 echo.
 echo altenhof
-curl -X GET http://localhost:10001/deck?format=plain --header "Authorization: Bearer test17-mtcgToken"
+curl -X GET http://localhost:10001/deck?format=plain --header "Authorization: Bearer battler2-mtcgToken"
 echo.
 echo.
 
@@ -177,8 +177,8 @@ echo.
 
 REM --------------------------------------------------
 echo 14) battle
-start /b "kienboec battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer kienboec-mtcgToken"
-start /b "altenhof battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer altenhof-mtcgToken"
+start /b "kienboec battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer battler1-mtcgToken"
+start /b "altenhof battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer battler2-mtcgToken"
 ping localhost -n 10 >NUL 2>NUL
 
 REM --------------------------------------------------
