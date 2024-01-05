@@ -40,7 +40,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("17 (Error at Token)");
+                throw new InvalidDataException("401 (Error at Token)");
             }
 
             ReadTableUsercards.GetUserOwnedCards(response, username);

@@ -43,7 +43,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11 (Body reading error)");
+                throw new InvalidDataException("401 (Body reading error)");
             }
 
             ReadTableUsers.UsernamePasswordCheck(response, user.Username, user.Password);

@@ -44,14 +44,14 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidDataException("17 (Token Error)");
+                    throw new InvalidDataException("401 (Token Error)");
                 }
 
                 int usercoins = ReadTableUsers.GetCoins(username);
 
                 if (usercoins < StandardValues.packageCost)
                 {
-                    throw new InvalidDataException("20 (too few coins)");
+                    throw new InvalidDataException("403 (not enough coins)");
                 }
                 else
                 {

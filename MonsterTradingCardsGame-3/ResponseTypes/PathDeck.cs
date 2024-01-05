@@ -55,8 +55,17 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             List<int> usercardsids = new();
 
-            string[] tokenparts = headerInfos[1].Split(' ');
-            string username = (tokenparts[1].Split('-'))[0];
+            string[] tokenparts;
+            string username;
+            try
+            {
+                tokenparts = headerInfos[1].Split(' ');
+                username = (tokenparts[1].Split('-'))[0];
+            }
+            catch (Exception e)
+            {
+                throw new InvalidDataException("401 (Token error)");
+            }
 
             usercardsids = ReadTableUserdeck.GetUserdeck(username);
 
@@ -96,23 +105,23 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
             }
             catch (Exception e)
             {
-                throw new InvalidDataException("11 (Body reading error)");
+                throw new InvalidDataException("401 (Body reading error)");
             }
 
             if (deck.Username == "")
             {
-                throw new InvalidDataException("10 (Error at Token)");
+                throw new InvalidDataException("401 (Error at Token)");
             }
 
             if(deck.CardId1 == -1 || deck.CardId2 == -1 || deck.CardId3 == -1 || deck.CardId4 == -1)
             {
-                throw new InvalidDataException("12 (too few cards given)");
+                throw new InvalidDataException("400 (too few cards given)");
             }
 
             if(deck.CardId1 == deck.CardId2 || deck.CardId2 == deck.CardId3 || deck.CardId3 == deck.CardId4 || 
                deck.CardId1 == deck.CardId3 || deck.CardId1 == deck.CardId4 || deck.CardId2 == deck.CardId4)
             {
-                throw new InvalidDataException("13 (every card is only once allowed in the deck)");
+                throw new InvalidDataException("403 (every card is only once allowed in the deck)");
             }
 
             bool existingDeck = false;
@@ -129,7 +138,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if(cards.Count < 4)
             {
-                throw new InvalidDataException("14 (too few cards owned)");
+                throw new InvalidDataException("403 (too few cards owned)");
             }
 
             foreach (var card in cards)
@@ -142,7 +151,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if(allCardsOwned != 4)
             {
-                throw new InvalidDataException("15 (not all for deck selected cards owned)");
+                throw new InvalidDataException("403 (not all for deck selected cards owned)");
             }
 
             if (existingDeck)

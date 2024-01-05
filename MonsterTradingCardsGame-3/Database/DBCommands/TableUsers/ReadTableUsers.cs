@@ -40,7 +40,7 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             }
             else
             {
-                throw new ArgumentException("6 (No user with this username)");
+                throw new ArgumentException("404 (No user with this username)");
             }
 
             connection.Close();
@@ -111,7 +111,7 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             }
             else
             {
-                throw new InvalidDataException("4 (No user with this username)");
+                throw new InvalidDataException("404 (No user with this username)");
             }
         }
 
@@ -181,7 +181,7 @@ namespace MonsterTradingCardsGame_3.Database.DBCommands.TableUsers
             }
             else
             {
-                throw new ArgumentException("21");
+                throw new ArgumentException("401 (Invalid username/password provided)");
             }
         }
 

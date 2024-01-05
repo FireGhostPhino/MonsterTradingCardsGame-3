@@ -22,8 +22,6 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
         public PathBattles(string[] headerInfos, string[] pathSplitted, string bodyInformation, HTTP_Response response)
         {
-            Console.WriteLine("\nTest PathBattles requestHandler");
-
             string requestType = headerInfos[2];
 
             if (requestType == Enums.RequestTypes.POST.ToString())
@@ -51,7 +49,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidDataException("17 (Error at Token)");
+                    throw new InvalidDataException("401 (Error at Token)");
                 }
                 if (username == battleRequestUsername)
                 {
@@ -60,7 +58,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
                 List<int> usercardids = ReadTableUserdeck.GetUserdeck(username);
                 if (usercardids.Count < 4)
                 {
-                    throw new InvalidDataException("23 (too few cards in deck)");
+                    throw new InvalidDataException("403 (too few cards in deck)");
                 }
 
                 counter++;
@@ -96,11 +94,11 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if(usercardidsUser1.Count < 4)
             {
-                throw new InvalidDataException("23 (too few cards in deck of user " + usercardidsUser1 + ")");
+                throw new InvalidDataException("403 (too few cards in deck of user " + usercardidsUser1 + ")");
             }
             if (usercardidsUser2.Count < 4)
             {
-                throw new InvalidDataException("23 (too few cards in deck of user " + usercardidsUser2 + ")");
+                throw new InvalidDataException("403 (too few cards in deck of user " + usercardidsUser2 + ")");
             }
 
             List<Card> usercardsUser1 = ReadTableUsercards.ReturnUserdeckValues(battleUser1, usercardidsUser1);

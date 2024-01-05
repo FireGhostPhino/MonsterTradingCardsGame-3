@@ -84,7 +84,7 @@ namespace MonsterTradingCardsGame_3.ResponseTypes
 
             if(ReadTableUsers.UsernameExist(user.Username) == true)
             {
-                throw new ArgumentException("4 (Username already existing)");
+                throw new ArgumentException("409 (Username already existing)");
             }
 
             WriteTableUsers.InsertUser(user);
